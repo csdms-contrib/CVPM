@@ -1,0 +1,25 @@
+Test5_xz namelist
+XZ instantaneous step change at upper boundary, vertical test
+1 fixed-property type, zero source
+
+planet                   = 'earth',
+site                     = 'Test5',
+coordinate_system        = 'XZ',
+problem_scale            = 'local',
+min_Z, max_Z             =  0, 600,
+min_X, max_X             =  0, 800,
+time_units               = 'years',
+start_time, end_time     =  0, 40,
+computational_time_step  =  0.025,      
+output_interval          =  5,
+initT_opt                =  3,    
+initial_condition_file   = 'none',
+upperBC_type, _file      = 'T', 'Ts_5Kstep_xz.txt',
+lowerBC_type, _file      = 'q', 'qb_50_xz.txt',
+xleftBC_type, _file      = 'q', 'qa_0_xz.txt',
+xrightBC_type, _file     = 'q', 'qo_0_xz.txt',
+source_function_opt      = 'zero',
+compaction_function_opt  = 'off',
+pressure_opt             = 'off',
+solute                   = 'none',
+implicit_explicit_factor = 0.9,

@@ -1,0 +1,22 @@
+TestR_r namelist
+instantaneous step change at inner boundary, radial test
+1 fixed-property layer, zero source
+
+planet                   = 'earth',
+site                     = 'TestR3',
+coordinate_system        = 'R',
+depth                    =  100,
+min_R, max_R             =  0.16, 80,
+time_units               = 'days',
+start_time, end_time     =  0, 60,
+computational_time_step  =  0.01,
+output_interval          =  5,
+initT_opt                =  2,    
+initial_condition_file   = 'none',
+innerBC_type, _file      = 'T', 'Ta_30Kstep.txt',
+outerBC_type, _file      = 'q', 'qo_0.txt',
+source_function_opt      = 'zero',
+compaction_function_opt  = 'off',
+pressure_opt             = 'off',
+solute                   = 'none',
+implicit_explicit_factor = 0.8,

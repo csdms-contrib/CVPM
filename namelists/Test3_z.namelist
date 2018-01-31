@@ -1,0 +1,21 @@
+Test3_z namelist
+temperature-dependent conductivity and specific heat, vertical test
+type = linIce, zero source
+
+planet                   = 'earth',
+site                     = 'Test3',
+coordinate_system        = 'Z',
+min_Z, max_Z             =  0, 500,
+time_units               = 'years',
+start_time, end_time     =  0, 10,
+computational_time_step  =  0.01,
+output_interval          =  1,
+initT_opt                =  3,    
+initial_condition_file   = 'none',
+upperBC_type, _file      = 'T', 'Ts_10.txt',
+lowerBC_type, _file      = 'q', 'qb_40.txt',
+source_function_opt      = 'zero',
+compaction_function_opt  = 'off',
+pressure_opt             = 'off',
+solute                   = 'none',
+implicit_explicit_factor = 0.8,

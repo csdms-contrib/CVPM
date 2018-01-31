@@ -1,0 +1,25 @@
+Test4_xz namelist
+exponential source-term, XZ vertical test
+1 fixed-property type, exponential source
+
+planet                   = 'earth',
+site                     = 'Test4',
+coordinate_system        = 'XZ',
+problem_scale            = 'local',
+min_Z, max_Z             =  0, 1000,
+min_X, max_X             =  0,  800,
+time_units               = 'years',
+start_time, end_time     =  0, 10,
+computational_time_step  =  0.05,
+output_interval          =  1,
+initT_opt                =  3,    
+initial_condition_file   = 'none',
+upperBC_type, _file      = 'T', 'Ts_10_xz.txt',
+lowerBC_type, _file      = 'q', 'qb_100_xz.txt',
+xleftBC_type, _file      = 'q', 'qa_0_xz.txt',
+xrightBC_type, _file     = 'q', 'qo_0_xz.txt',
+source_function_opt      = 'exponential',
+compaction_function_opt  = 'off',
+pressure_opt             = 'off',
+solute                   = 'none',
+implicit_explicit_factor = 0.8,

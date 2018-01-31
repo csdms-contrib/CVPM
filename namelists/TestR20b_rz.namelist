@@ -1,0 +1,26 @@
+TestR20b_rz namelist
+relaxation of hot temperatures inside borehole, no inner boundary
+1 fixed-property layer outside of borehole, zero source
+
+planet                   = 'earth',
+site                     = 'TestR20b',
+coordinate_system        = 'RZ',
+problem_scale            = 'local',
+borehole_depth           =  300,
+min_Z, max_Z             =  0, 400,
+min_R, max_R             =  0, 80,
+time_units               = 'days',
+start_time, end_time     =  0, 60,
+computational_time_step  =  0.01,
+output_interval          =  5,
+initT_opt                =  1,    
+initial_condition_file   = 'TestR2b_rz_finalT.mat',
+upperBC_type, _file      = 'T', 'Ts_10_rz.txt',
+lowerBC_type, _file      = 'q', 'qb_50_rz.txt',
+innerBC_type, _file      = 'none', 'none',
+outerBC_type, _file      = 'q', 'qo_0_rz.txt',
+source_function_opt      = 'zero',
+compaction_function_opt  = 'off',
+pressure_opt             = 'off',
+solute                   = 'none',
+implicit_explicit_factor = 0.8,

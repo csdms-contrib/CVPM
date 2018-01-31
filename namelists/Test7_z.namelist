@@ -1,0 +1,21 @@
+Test7_z namelist
+periodic temperature oscillation on upper boundary, vertical test
+1 fixed-property type, zero source
+
+planet                   = 'earth',
+site                     = 'Test7',
+coordinate_system        = 'Z',
+min_Z, max_Z             =  0, 50,
+time_units               = 'years',
+start_time, end_time     =  0, 5.25,
+computational_time_step  =  0.00005,    
+output_interval          =  0.25,
+initT_opt                =  3,    
+initial_condition_file   = 'none',
+upperBC_type, _file      = 'T', 'Ts_periodic.txt',
+lowerBC_type, _file      = 'q', 'qb_0.txt',
+source_function_opt      = 'zero',
+compaction_function_opt  = 'off',
+pressure_opt             = 'off',
+solute                   = 'none',
+implicit_explicit_factor = 0.5,

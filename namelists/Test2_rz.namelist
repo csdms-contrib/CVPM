@@ -1,0 +1,26 @@
+Test2_rz namelist
+RZ composite-material vertical test
+2 alternating fixed-property types, zero source
+
+planet                   = 'earth',
+site                     = 'Test2',
+coordinate_system        = 'RZ',
+problem_scale            = 'local',
+borehole_depth           =  4000,
+min_Z, max_Z             =  0, 800,
+min_R, max_R             =  0.5, 80,
+time_units               = 'years',
+start_time, end_time     =  0, 10,
+computational_time_step  =  0.01,
+output_interval          =  1,
+initT_opt                =  3,    
+initial_condition_file   = 'none',
+upperBC_type, _file      = 'T', 'Ts_10_rz.txt',
+lowerBC_type, _file      = 'q', 'qb_50_rz.txt',
+innerBC_type, _file      = 'q', 'qa_0_rz.txt',
+outerBC_type, _file      = 'q', 'qo_0_rz.txt',
+source_function_opt      = 'zero',
+compaction_function_opt  = 'off',
+pressure_opt             = 'off',
+solute                   = 'none',
+implicit_explicit_factor =  0.8,

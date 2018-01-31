@@ -1,0 +1,21 @@
+Test1_z namelist
+simple vertical test
+1 fixed-property layer, zero source
+
+planet                   = 'earth',
+site                     = 'Test1',
+coordinate_system        = 'Z',
+min_Z, max_Z             =  0, 20,
+time_units               = 'years',
+start_time, end_time     =  0, 10,
+computational_time_step  =  0.05,
+output_interval          =  1,
+initT_opt                =  3,    
+initial_condition_file   = 'none',
+upperBC_type, _file      = 'T', 'Ts_10.txt',
+lowerBC_type, _file      = 'q', 'qb_50.txt',
+source_function_opt      = 'zero',
+compaction_function_opt  = 'off',
+pressure_opt             = 'off',
+solute                   = 'none',
+implicit_explicit_factor = 0.8,
