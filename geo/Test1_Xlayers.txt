@@ -1,0 +1,7 @@
+Test1 X-layers
+use properties found in Z-layers file
+
+Xmin  Xmax  dx   Mtyp unused...
+  0,    4,   1,   99,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  4,   16,   2,   99,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 16,   20,   1,   99,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

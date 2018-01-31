@@ -1,0 +1,6 @@
+TestR1b Z-layers
+1 fixed-property type
+
+Ztop Zbot  dz  Mtyp  K  rho   cp    unused...
+ 0,  100,   2,  1,   2, 2000, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+100, 400,   5,  1,   2, 2000, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
