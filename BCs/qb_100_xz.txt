@@ -1,0 +1,6 @@
+qb = constant = 100 mW/m^22D cartesian experiment
+
+t_units       = 'years',
+interp_method = 'linear',
+X             =        -1000,   1000,
+t, qb(X)      =   0,  100e-03, 100e-03,              = 100,  100e-03, 100e-03,

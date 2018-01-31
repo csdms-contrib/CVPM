@@ -1,0 +1,8 @@
+Ts = constant = -10 C
+2D cartesian experiment
+
+t_units       = 'years',
+interp_method = 'linear',
+X             =        0, 500, 1000,
+t, Ts(X)      =   0, -10, -10, -10,
+              = 100, -10, -10, -10,

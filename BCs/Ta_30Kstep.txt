@@ -1,0 +1,7 @@
+Ta = 30K step change
+1D radial experiment
+
+t_units       = 'days',
+interp_method = 'linear',
+t, Ta         =       0, -10,
+              = 0.00001,  20,              =      60,  20,

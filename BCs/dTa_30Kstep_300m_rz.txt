@@ -1,0 +1,9 @@
+dTa = 30 K above 300 m, 0 K below 300 m
+2D cylindrical experiment
+
+t_units       = 'days',
+interp_method = 'linear',
+Z             =             0, 300, 300.01, 1000,
+t, dTa(Z)     =        0,   0,   0,      0,    0,
+              =  0.00001,  30,  30,      0,    0,
+              =    10000,  30,  30,      0,    0,

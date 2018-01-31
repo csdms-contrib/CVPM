@@ -1,0 +1,8 @@
+Ts = constant = -10 C
+2D cylindrical experiment
+
+t_units       = 'years',
+interp_method = 'linear',
+R             =        0,   1,  75, 1000,
+t, Ts(R)      =   0, -10, -10, -10,  -10,
+              = 100, -10, -10, -10,  -10,

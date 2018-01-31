@@ -1,0 +1,8 @@
+Ts = 5K step change
+2D vertical experiment
+
+t_units       = 'years',
+interp_method = 'linear',
+X             =         0,   1, 500, 1000,
+t, Ts(X)      =    0, -10, -10, -10, -10,
+              = 0.01,  -5,  -5,  -5,  -5,              =  100,  -5,  -5,  -5,  -5,

@@ -1,0 +1,6 @@
+qb = constant = 40 mW/m^2
+1D vertical experiment
+
+t_units       = 'years',
+interp_method = 'linear',
+t, qb         =    0,  40e-03,              = 9000,  40e-03,

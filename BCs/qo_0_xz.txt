@@ -1,0 +1,7 @@
+qo = constant = 0 mW/m^22D cartesian experiment
+
+t_units       = 'years',
+interp_method = 'linear',
+Z             =       0, 500, 1000,
+t, qo(Z)      =   0,  0,   0,    0,
+              = 100,  0,   0,    0,

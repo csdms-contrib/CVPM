@@ -1,0 +1,8 @@
+Ts = constant = -10 C
+1D vertical experiment
+
+t_units       = 'years',
+interp_method = 'linear',
+t, Ts         =   0,   -10,              = 0.1,   -10,              =   1,   -10,
+              =  10,   -10,
+              = 100,   -10,
