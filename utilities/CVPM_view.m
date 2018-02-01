@@ -1,4 +1,4 @@
-% CVPMview.m
+% CVPM_view.m
 
 % View the results from a CVPM simulation.
 % ______________________________________________
