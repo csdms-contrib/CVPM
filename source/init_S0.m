@@ -27,3 +27,7 @@
 % extract S0 from the Marr array
 
  S0 = Marr(:,col);
+
+% convert to SI base units
+
+ S0 = 1e-03 * S0;       % [W/m^3]
