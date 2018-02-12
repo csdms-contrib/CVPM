@@ -15,7 +15,7 @@
 %   3  n-butyl acetate
 %   4  Estisol 140
 %   5  Estisol 240
-
+%   6  IsoparK
 % ______________________________________________
 
 % Written by:
@@ -36,14 +36,10 @@
 
  case 3                     % n-butyl acetate (at -10 C)
    K  = 0.1434*ones(size(T));
-   Nu = 162;
-   K  = Nu * K;
 
  case {4,5}                 % Estisol 140/240
    K = 0.18*ones(size(T));
 
- case 6                     % WAIS-D
-%   K = 0.15*ones(size(T));
-   K = 40*ones(size(T));
-
+ case 6                     % IsoparK mix
+   K = 0.15*ones(size(T));
  end

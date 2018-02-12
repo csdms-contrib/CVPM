@@ -68,12 +68,13 @@
 
    case {30,31,32,33,34,35}         % borehole fluids
 
-     rhocp(L) = rhom(L) .* cpm0(L);
+     Ftype    = Mtypes(j) - 29;
+     rhocp(L) = C_fluid(T(L),Ftype);
      C(L)     = rhocp(L);
 
    case {40,41,42,43,44}            % metals
 
-     rhocp(L) = rhom(L) .* cpm0(L);
+     rhocp(L) = C_metal(T(L),Mtyp(L));
      C(L)     = rhocp(L);
    end
  end

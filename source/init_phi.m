@@ -85,7 +85,7 @@
        phi(L) = phi0(L) .* exp(-Z(L) ./ hc(L));
      end
 
-%   apply compaction limit
+%   apply compaction limit (critical porosity)
 
      L2        = phi < phic;
      L3        = L & L2;
