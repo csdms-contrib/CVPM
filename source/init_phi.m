@@ -1,7 +1,7 @@
  function phi = init_phi(C_opt,Z,Mtyp,Marr,col,CS)
 
 % Initializes the porosity.  Except for test materials and ice (Mtyp <=3), 
-% the porosity decreases with depth until it reaches a limiting value phi_floor.
+% the porosity decreases with depth until it reaches a critical value phic.
 % Three types of compaction functions are currently available,
 
 %   C_opt = 'off'           no compaction with depth
@@ -9,20 +9,20 @@
 %         = 'exponential'   porosity decreases exponentially with depth
 
 % To allow for a variable lithologic profile, different layers are allowed to 
-% have different phi0, phi_floor, and hc values.
+% have different phi0, phic, and hc values.
 
 % Notation:
 
-%   C_opt     = compaction function option                  (character string)
-%   Z         = depth                                       (M+1)
-%   Mtyp      = material type                               (M+1)
-%   Marr      = array of material parameters                (M+1,nparams)
-%   col       = column within Marr where phi0 is located    (scalar)
-%   CS        = coordinate system                           (character string)
-%   phi       = porosity                                    (M+1)
-%   phi0      = what the porosity would be at the surface   (M+1)
-%   phi_floor = compaction limit                            (M+1)
-%   h_c       = compaction length scale                     (M+1)
+%   C_opt = compaction function option                  (character string)
+%   Z     = depth                                       (M+1)
+%   Mtyp  = material type                               (M+1)
+%   Marr  = array of material parameters                (M+1,nparams)
+%   col   = column within Marr where phi0 is located    (scalar)
+%   CS    = coordinate system                           (character string)
+%   phi   = porosity                                    (M+1)
+%   phi0  = porosity extrapolated to the surface        (M+1)
+%   phic  = critical porosity                           (M+1)
+%   hc    = compaction length scale                     (M+1)
 % ______________________________________________
 
 % Written by:
@@ -64,9 +64,13 @@
 
 %   unpack phi-related parameters from Marr array
 
-     phi0      = Marr(:,col);   
-     phi_floor = Marr(:,col+1);
-     h_c       = Marr(:,col+2);
+     phi0 = Marr(:,col);   
+     phic = Marr(:,col+1);
+     hc   = Marr(:,col+2);
+
+% convert to SI base units
+
+     hc = 1000 * hc;        % [m]
 
 %   apply compaction function
 
@@ -75,16 +79,16 @@
        phi(L) = phi0(L);
 
      case 'linear'
-       phi(L) = phi0(L) .* (1 - Z(L) ./ h_c(L));
+       phi(L) = phi0(L) .* (1 - Z(L) ./ hc(L));
 
      case 'exponential'
-       phi(L) = phi0(L) .* exp(-Z(L) ./ h_c(L));
+       phi(L) = phi0(L) .* exp(-Z(L) ./ hc(L));
      end
 
 %   apply compaction limit
 
-     L2        = phi < phi_floor;
+     L2        = phi < phic;
      L3        = L & L2;
-     phi(L3)   = phi_floor(L3);
+     phi(L3)   = phic(L3);
    end
  end

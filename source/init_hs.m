@@ -27,3 +27,7 @@
 % extract hs from the Marr array
 
  hs = Marr(:,col);
+
+% convert to SI base units
+
+ hs = 1000 * hs;        % [m]
