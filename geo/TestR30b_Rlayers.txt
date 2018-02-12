@@ -1,5 +1,5 @@
 TestR30b R-layers
-1 fixed-property type outside of borehole, borehole fluid=JetA
+simple material with fixed-properties outside of borehole, borehole fluid = JetA
 
 Rmin  Rmax  dr   Mtyp   K    rho    cp   unused...
    0, 0.16, 0.02, 31, 0.1205, 830, 1817, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

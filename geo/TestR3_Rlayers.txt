@@ -1,5 +1,5 @@
 TestR3 R-layers
-1 fixed-property type outside of borehole
+simple material with fixed properties outside of borehole, zero porosity
 
 Rmin  Rmax  dr   Mtyp   K    rho    cp   unused...
 0.16,  0.2, 0.02,  1,  1.85, 2200,  900, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

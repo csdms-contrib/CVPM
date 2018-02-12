@@ -1,5 +1,5 @@
 TestR30b Z-layers
-1 fixed-property type
+simple material with fixed-properties, zero porosity
 
 Ztop Zbot  dz  Mtyp   K    rho   cp   unused...
  0,  100,   2,  1,   1.85, 2200, 900, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

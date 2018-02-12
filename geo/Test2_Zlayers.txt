@@ -1,5 +1,5 @@
 Test2 Z-layers
-2 alternating fixed-property types
+2 simple material with fixed-properties, zero porosity
 
 Ztop Zbot  dz  Mtyp  K  rho   cp   S0 hs  unused...
   0,   50,  2,  1,   4, 2500, 1600, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

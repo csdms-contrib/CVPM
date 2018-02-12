@@ -1,5 +1,5 @@
 Test3 Z-layers
-type = linIce (linearized ice)
+temperature-dependent conductivity and specific heat (linearized version of ice)
 
 Ztop Zbot  dz  Mtyp  K    unused...
   0, 100, 0.5,  2,  2.07, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

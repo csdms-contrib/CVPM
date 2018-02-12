@@ -1,5 +1,5 @@
 TestR1 R-layers
-1 fixed-property type, just a few CVs
+simple material with fixed-properties, zero porosity, just a few CVs
 
 Rmin  Rmax  dr   Mtyp  K   rho   cp    unused...
 0.5,  10,  0.50,  1,   2,  2000, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
