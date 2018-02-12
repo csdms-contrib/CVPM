@@ -1,6 +1,6 @@
 TestR1_rz namelist
-simple radial test
-1 fixed-property layer, zero source
+simple RZ radial test, steady state
+simple material with fixed-properties, zero source
 
 planet                   = 'earth',
 site                     = 'TestR1b',

@@ -1,6 +1,6 @@
 Test5_xyz namelist
-instantaneous step change at upper boundary, XYZ vertical test
-1 fixed-property type, zero source
+XYZ vertical test, instantaneous 5 K warming on upper boundary
+simple material with fixed-properties, zero source
 
 planet                   = 'earth',
 site                     = 'Test5',

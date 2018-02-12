@@ -1,6 +1,6 @@
 Test2_z namelist
-composite-material vertical test
-2 alternating fixed-property types, zero source
+1-D vertical test, steady state
+2 simple materials with fixed-properties, zero source
 
 planet                   = 'earth',
 site                     = 'Test2',

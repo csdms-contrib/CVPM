@@ -1,6 +1,6 @@
 Test7_z namelist
-periodic temperature oscillation on upper boundary, vertical test
-1 fixed-property type, zero source
+1-D vertical test, periodic temperature oscillation on upper boundary
+simple material with fixed-properties, zero source
 
 planet                   = 'earth',
 site                     = 'Test7',

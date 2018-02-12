@@ -1,6 +1,6 @@
 Test1_rz namelist
-RZ simple vertical test
-1 fixed-property layer, zero source
+RZ simple vertical test, steady state
+simple material with fixed-properties, zero source
 
 planet                   = 'earth',
 site                     = 'Test1',

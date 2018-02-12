@@ -1,6 +1,6 @@
 Test4_rz namelist
-exponential source term, RZ vertical test
-1 fixed-property type, exponential source
+RZ vertical test, steady state
+simple material with fixed-properties, exponential source term
 
 planet                   = 'earth',
 site                     = 'Test4',

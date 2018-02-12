@@ -1,6 +1,6 @@
 TestR2b_rz namelist
-instantaneous step change at inner boundary, radial test
-1 fixed-property layer, zero source
+RZ radial test, instantaneous warming on inner boundary
+simple material with fixed-properties, zero source
 
 planet                   = 'earth',
 site                     = 'TestR2b',

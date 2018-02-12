@@ -1,6 +1,6 @@
 Test4_xz namelist
-exponential source-term, XZ vertical test
-1 fixed-property type, exponential source
+XZ vertical test, steady state
+simple material with fixed-properties, exponential source term
 
 planet                   = 'earth',
 site                     = 'Test4',

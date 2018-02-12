@@ -1,6 +1,6 @@
 Test3_xz namelist
-temperature-dependent conductivity and specific heat, XZ vertical test
-type = linIce, zero source
+XZ vertical test, steady state
+temperature-dependent conductivity and specific heat (Mtyp = 2), zero source
 
 planet                   = 'earth',
 site                     = 'Test3',

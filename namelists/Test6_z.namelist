@@ -1,6 +1,6 @@
 Test6_z namelist
-linear increase in upper boundary temperature, vertical test
-1 fixed-property type, zero source
+1-D vertical test, 1 K/decade warming on the upper boundary
+simple material with fixed-properties, zero source
 
 planet                   = 'earth',
 site                     = 'Test6',
@@ -8,7 +8,7 @@ coordinate_system        = 'Z',
 min_Z, max_Z             =  0, 400,
 time_units               = 'years',
 start_time, end_time     =  0, 50,
-computational_time_step  =  0.005,
+computational_time_step  =  0.001,
 output_interval          =  5,
 initT_opt                =  3,    
 initial_condition_file   = 'none',

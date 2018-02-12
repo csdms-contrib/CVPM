@@ -1,6 +1,6 @@
 Test1_xz namelist
-XZ simple vertical test
-1 fixed-property layer, zero source
+XZ simple vertical test, steady state
+simple material with fixed-properties, zero source
 
 planet                   = 'earth',
 site                     = 'Test1',

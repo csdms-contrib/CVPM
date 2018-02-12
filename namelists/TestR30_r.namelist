@@ -1,6 +1,6 @@
 TestR30_r namelist
-relaxation of hot temperatures inside borehole, no inner boundary
-1 fixed-property layer outside of borehole, zero source
+1-D radial test, no inner boundary, relaxation of hot initial condition near borehole
+simple material with fixed-properties outside of borehole, zero source
 
 planet                   = 'earth',
 site                     = 'TestR30',

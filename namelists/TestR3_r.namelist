@@ -1,6 +1,6 @@
-TestR_r namelist
-instantaneous step change at inner boundary, radial test
-1 fixed-property layer, zero source
+TestR3_r namelist
+1-D radial test, instantaneous 30 K warming on inner boundary
+simple material with fixed-properties, zero source
 
 planet                   = 'earth',
 site                     = 'TestR3',
