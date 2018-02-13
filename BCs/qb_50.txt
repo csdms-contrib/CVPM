@@ -1,5 +1,5 @@
 qb = constant = 50 mW/m^2
-1D vertical experiment
+1-D vertical experiment
 
 t_units       = 'years',
 interp_method = 'linear',

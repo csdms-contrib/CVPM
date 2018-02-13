@@ -1,4 +1,4 @@
-qo = constant = 0 mW/m^22D cylindrical experiment
+qo = constant = 0 mW/m^22-D cylindrical experiment
 
 t_units       = 'years',
 interp_method = 'linear',
