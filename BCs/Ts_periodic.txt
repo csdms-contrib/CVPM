@@ -1,5 +1,5 @@
 Ts = periodic (period = 1 yr, amplitude = 1 K)
-1D vertical experiment
+1-D vertical experiment
 
 t_units       = 'years',
 interp_method = 'spline',

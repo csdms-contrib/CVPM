@@ -1,5 +1,5 @@
 dTa = 30 K above 300 m, 0 K below 300 m
-2D cylindrical experiment
+2-D cylindrical experiment
 
 t_units       = 'days',
 interp_method = 'linear',

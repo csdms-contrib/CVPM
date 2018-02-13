@@ -1,5 +1,5 @@
 Ts = constant = -10 C
-2D cartesian experiment
+2-D cartesian experiment
 
 t_units       = 'years',
 interp_method = 'linear',

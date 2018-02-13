@@ -1,5 +1,5 @@
 Ts = constant = -10 C
-1D vertical experiment
+1-D vertical experiment
 
 t_units       = 'years',
 interp_method = 'linear',

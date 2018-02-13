@@ -1,5 +1,5 @@
 Ts = 5K step change
-2D vertical experiment
+2-D vertical experiment
 
 t_units       = 'years',
 interp_method = 'linear',
