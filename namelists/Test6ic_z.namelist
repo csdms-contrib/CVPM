@@ -1,0 +1,21 @@
+Test6ic_z namelist
+1-D vertical test, 1 K/decade warming on the upper boundary
+simple material with fixed-properties, zero source, IC input file
+
+planet                   = 'earth',
+site                     = 'Test6',
+coordinate_system        = 'Z',
+min_Z, max_Z             =  0, 400,
+time_units               = 'years',
+start_time, end_time     =  0, 50,
+computational_time_step  =  0.001,
+output_interval          =  5,
+initT_opt                =  1,    
+initial_condition_file   = 'Test6z_ic.txt',
+upperBC_type, _file      = 'T', 'Ts_1Kdecade.txt',
+lowerBC_type, _file      = 'q', 'qb_50.txt',
+source_function_opt      = 'zero',
+compaction_function_opt  = 'off',
+pressure_opt             = 'off',
+solute                   = 'none',
+implicit_explicit_factor = 0.5,
