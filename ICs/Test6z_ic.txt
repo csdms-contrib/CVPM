@@ -1,0 +1,9 @@
+Test6z_ic: initial condition for Test6ic_z
+1-D vertical experiment
+
+interp_method = 'linear',
+z, T          =   0, -10,
+              = 100, -7.5,
+              = 200, -5.0,
+              = 300, -2.5,
+              = 400,    0,
