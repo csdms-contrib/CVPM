@@ -2,6 +2,6 @@ qa = constant = 0 mW/m^22-D cylindrical experiment
 
 t_units       = 'years',
 interp_method = 'linear',
-Z             =       0, 500, 1000,
+Z             =       0, 500, 10000,
 t, qa(Z)      =   0,  0,   0,    0,
               = 100,  0,   0,    0,
