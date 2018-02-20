@@ -18,7 +18,7 @@
 % plot options
 
  bflag = 1;     % bflag=1 shows vertical line at x=0, y=0
- pflag = 2;     % pflag=1 show dT/dz, pflag=2 shows (T - Tinit)
+ pflag = 1;     % pflag=1 show dT/dz, pflag=2 shows (T - Tinit)
 
 % pickup the location of the working directory from the CVPM.config file
 

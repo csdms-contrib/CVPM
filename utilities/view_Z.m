@@ -28,7 +28,7 @@
 %   Email: gary.clow@colorado.edu
 % ______________________________________________
  
- dt_pause = 0.1;      % pause duration (sec)
+ dt_pause = 0.05;      % pause duration (sec)
 
  disp(' ')
  experim = input('Type name of experiment: ', 's');
@@ -92,143 +92,70 @@
      kappa = kappa(1:kp);
    end
 
-   subplot(2,3,1)
+   ax(1) = subplot(2,3,1);
    plot(T,ZZ,'b','linewidth',lw)
    hold on 
    grid on
+   zoom on
    set(gca,'YDir','reverse')
    xlabel('Temperature ($^\circ$C)','interpreter','latex')
    ylabel('Depth (m)','interpreter','latex')
    title(['Temperature~~(time = ' num2str(tgrid(i)) ' ' t_units ')'],'interpreter','latex')
 
-   subplot(2,3,2)
+   ax(2) = subplot(2,3,2);
    plot(1000*dTdz,ZZ,'r','linewidth',lw)
    hold on 
    grid on
+   zoom on
    set(gca,'YDir','reverse')
    xlabel('$\partial T/\partial z$ (mK~m$^{-1}$)','interpreter','latex')
    title('Temperature Gradient','interpreter','latex')
 
-   subplot(2,3,3)
+   ax(3) = subplot(2,3,3);
    plot(K,ZZ,'color',[0 0.5 0],'linewidth',lw)
    hold on 
    grid on
+   zoom on
    set(gca,'YDir','reverse')
    xlabel('$K$~(W~m$^{-1}$~K$^{-1}$)','interpreter','latex')
    title('Bulk Thermal Conductivity','interpreter','latex')
 
-   subplot(2,3,4)
-   plot(phi_u,ZZ,'b','linewidth',lw)
+   ax(4) = subplot(2,3,4);
+   plot(phi_i,ZZ,'b','linewidth',lw)
    hold on
+   plot(phi_u,ZZ,'color',[0 0.5 0],'linewidth',lw)
    grid on
+   zoom on
    set(gca,'YDir','reverse')
-   xlabel('$\phi_u$','Interpreter','latex')
-   title('Volume Fraction of Unfrozen Water','interpreter','latex')
+   xlabel('$\phi_i$ and $\phi_u$','interpreter','latex')
+   ylabel('Depth (m)','interpreter','latex')
+   title('Water Volume Fractions','interpreter','latex')
+   if i == 1
+     sleg = {' $\phi_i$ ',' $\phi_u$ '};
+     legend(sleg,'location','southeast','interpreter','latex','fontsize',14)
+   end
 
-   subplot(2,3,5)
+   ax(5) = subplot(2,3,5);
    plot(C/1e06,ZZ,'r','linewidth',lw)
    hold on 
+   zoom on
    grid on
    set(gca,'YDir','reverse')
    xlabel('$C$ (MJ m$^{-3}$ K$^{-1}$) ','interpreter','latex')
    title('Volumetric Heat Capacity','interpreter','latex')
 
-   subplot(2,3,6)
+   ax(6) = subplot(2,3,6);
    plot(1e06*kappa,ZZ,'m','linewidth',lw)
    hold on 
    grid on
+   zoom on
    set(gca,'YDir','reverse')
    xlabel('$10^6 \kappa$ (m$^2$ s$^{-1}$) ','interpreter','latex')
    title('Thermal Diffusivity','interpreter','latex')
+   linkaxes(ax,'y')
    pause(dt_pause)
  end
  pause
-
-% > Replot final values
-
- if Nout > 10
-   figure('position',pos)
-   for i=Nout-10:Nout
-
-     switch i
-     case Nout
-       lw = 1.5;
-     otherwise
-       lw = 1;
-     end
-
-     T     = Tarr(    :,i);
-     phi_i = phi_iarr(:,i);
-     phi_u = phi_uarr(:,i);
-     K     = Karr(    :,i);
-     C     = Carr(    :,i);
-     kappa = K ./ C;
-
-     dTdz      = NaN*ones(size(T));
-     dTdz(2:M) = (T(3:M+1)-T(1:M-1)) ./ (Z(3:M+1)-Z(1:M-1));
-
-     if zflag
-       T     = T(    1:kp);
-       dTdz  = dTdz( 1:kp);
-       phi_i = phi_i(1:kp);
-       phi_u = phi_u(1:kp);
-       K     = K(    1:kp);
-       C     = C(    1:kp);
-       kappa = kappa(1:kp);
-     end
-
-     subplot(2,3,1)
-     plot(T,ZZ,'b','linewidth',lw)
-     hold on 
-     grid on
-     set(gca,'YDir','reverse')
-     xlabel('Temperature ($^\circ$C)','interpreter','latex')
-     ylabel('Depth (m)','interpreter','latex')
-     title(['Temperature~~(time = ' num2str(tgrid(i)) ' ' t_units ')'],'interpreter','latex')
-
-     subplot(2,3,2)
-     plot(1000*dTdz,ZZ,'r','linewidth',lw)
-     hold on 
-     grid on
-     set(gca,'YDir','reverse')
-     xlabel('$\partial T/\partial z$ (mK~m$^{-1}$)','interpreter','latex')
-     title('Temperature Gradient','interpreter','latex')
-
-     subplot(2,3,3)
-     plot(K,ZZ,'color',[0 0.5 0],'linewidth',lw)
-     hold on 
-     grid on
-     set(gca,'YDir','reverse')
-     xlabel('$K$~(W~m$^{-1}$~K$^{-1}$)','interpreter','latex')
-     title('Bulk Thermal Conductivity','interpreter','latex')
-
-     subplot(2,3,4)
-     plot(phi_i,ZZ,'b','linewidth',lw)
-     hold on
-     grid on
-     set(gca,'YDir','reverse')
-     xlabel('$\phi_i$','Interpreter','latex')
-     title('Volume Fraction of Ice','interpreter','latex')
-
-     subplot(2,3,5)
-     plot(C/1e06,ZZ,'r','linewidth',lw)
-     hold on 
-     grid on
-     set(gca,'YDir','reverse')
-     xlabel('$C$ (MJ m$^{-3}$ K$^{-1}$) ','interpreter','latex')
-     title('Volumetric Heat Capacity','interpreter','latex')
-
-     subplot(2,3,6)
-     plot(1e06*kappa,ZZ,'m','linewidth',lw)
-     hold on 
-     grid on
-     set(gca,'YDir','reverse')
-     xlabel('$10^6 \kappa$ (m$^2$ s$^{-1}$) ','interpreter','latex')
-     title('Thermal Diffusivity','interpreter','latex')
-     pause(dt_pause)
-   end
-   pause
- end
 
 % > Find errors for test cases
 
@@ -294,6 +221,7 @@
      plot(T,Z,'r','linewidth',lw)
      hold on
      grid on
+     zoom on
      set(gca,'YDir','reverse')
      v = axis;
      v(3:4) = [Zmin Zmax];
@@ -306,9 +234,10 @@
      plot(J,Z,'b','linewidth',lw)
      hold on
      grid on
+     zoom on
      set(gca,'YDir','reverse')
-     v(1)   = floor(1000*minJ);
-     v(2)   = ceil( 1000*maxJ);
+     v(1)   = floor(1000*minJ);     % mW/m^2
+     v(2)   = ceil( 1000*maxJ);     % mW/m^2
      v(3:4) = [Zmin Zmax];
      axis(v)
      xlabel('$J$ (mW~m$^{-2}$)','interpreter','latex')
@@ -318,9 +247,10 @@
      plot(Jnet,Z,'color',[0 0.5 0],'linewidth',lw)
      hold on
      grid on
+     zoom on
      set(gca,'YDir','reverse')
-     v(1)   = floor(1000*minJnet);
-     v(2)   = ceil( 1000*maxJnet);
+     v(1)   = floor(1000*minJnet);  % mW/m^2
+     v(2)   = ceil( 1000*maxJnet);  % mW/m^2
      v(3:4) = [Zmin Zmax];
      if all(isfinite(v))
        axis(v)
@@ -332,6 +262,7 @@
      plot(error,Z,'m','linewidth',lw)
      hold on
      grid on
+     zoom on
      set(gca,'YDir','reverse')
      x = floor(log10(maxError));
      v(1)   = 10^x * floor(10^(-x) * minError);
@@ -349,9 +280,10 @@
      plot(QS,Z,'r','linewidth',lw)
      hold on
      grid on
+     zoom on
      set(gca,'YDir','reverse')
-     v(1)   = floor(1000*minJnet);
-     v(2)   = ceil( 1000*maxJnet);
+     v(1)   = floor(1000*minJnet);  % mW/m^2
+     v(2)   = ceil( 1000*maxJnet);  % mW/m^2
      v(3:4) = [Zmin Zmax];
      if all(isfinite(v))
        axis(v)
@@ -363,6 +295,7 @@
      plot(QS-Jnet,Z,'b','linewidth',lw)
      hold on
      grid on
+     zoom on
      set(gca,'YDir','reverse')
      v(2)   = ceil( 1000*maxJnet)/5;
      v(1)   = -v(2);

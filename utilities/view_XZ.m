@@ -16,7 +16,7 @@
 % plot options
 
  bflag = 0;     % bflag=1 shows vertical line at x=0, y=0
- pflag = 2;     % pflag=1 shows dT/dz, pflag=2 shows (T - Tinit)
+ pflag = 1;     % pflag=1 shows dT/dz, pflag=2 shows (T - Tinit)
 
 % pickup the location of the working directory from the CVPM.config file
 
@@ -241,5 +241,4 @@
      disp(['max(Error) = ' num2str(maxErr) ' K at t = ' num2str(tgrid(i)) ' '  t_units])
      pause(0.2)
    end
-   pause
  end

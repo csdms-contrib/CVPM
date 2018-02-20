@@ -333,8 +333,6 @@
  axis(v)
  subplot(1,2,2)
  v    = axis;
- v(1) = max(1e-10,v(1));
- v(2) = min(100,v(2));
  v(4) = max(Z);
  axis(v)
  legend(sleg,'location','southwest','interpreter','latex','fontsize',14)
