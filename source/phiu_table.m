@@ -40,7 +40,7 @@
 %   Email: gary.clow@colorado.edu
 % ______________________________________________
 
- nMtyp = length(Mtyp);
+ Mp1 = length(Mtyp);    % M+1
 
 % parameters
 
@@ -57,12 +57,12 @@
 
 % pre-allocate arrays
 
- phi_u = zeros(nMtyp,nT);
+ phi_u = zeros(Mp1,nT);
  T     = NaN*ones(size(phi_u));
 
 % Step through layers
 
- for k=1:length(Mtyp)       % step through layers
+ for k=1:Mp1       % step through layers
 
    if (Mtyp(k) >= 4) && (Mtyp(k) <= 25)
 

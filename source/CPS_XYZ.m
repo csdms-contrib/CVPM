@@ -325,6 +325,11 @@
      phi_uz  = phiuSub(Mtyp(:,N,L),phi_wz,lambda(:,N,L),r(:,N,L),DeltaT);
      phi_iz  = phi_wz - phi_uz;
 
+%   initialize phi_u(T) table
+
+     [phi_u_tab(:,N,L,:),T_tab(:,N,L,:)] = phiu_table(Mtyp(:,N,L),phi_w(:,N,L),lambda(:,N,L), ...
+        r(:,N,L),solute,xs0(:,N,L),theta_p);
+
 %   bulk thermal conductivity at CV grid points
 
      K = Ksub(Tz,Mtyp(:,N,L),Km0(:,N,L),phi(:,N,L),phi_iz,phi_uz,planet);
@@ -514,6 +519,8 @@
          K       = Ksub(Tz,Mtyp(:,j,jy),Km0(:,j,jy),phi(:,j,jy),phi_iz,phi_uz,planet);
          Ke      = Keff(K,varepZ);
          Tz      = initTz_numerSS(Ts(j,jy),qb(j,jy),Ke,dz,QS(:,j,jy));
+         [phi_u_tab(:,j,jy,:),T_tab(:,j,jy,:)] = phiu_table(Mtyp(:,j,jy),phi_w(:,j,jy),lambda(:,j,jy), ...
+            r(:,j,jy),solute,xs0(:,j,jy),theta_p);
 
 %       Phase 1 iterations
          icount = 1;
@@ -560,11 +567,9 @@
 
  case 3             % > Analytic solution ----
 
-   phi_u_tab = NaN*ones(M+1,N+1,L+1,1);
-   T_tab     = NaN*ones(M+1,N+1,L+1,1);
-   rho       = rhom;
-   cp        = cpm0;
-   C         = rho .* cp;
+   rho = rhom;
+   cp  = cpm0;
+   C   = rho .* cp;
 
    switch Pscale
    case 'local'             % use properties found at X(N),Y(L)
@@ -584,6 +589,8 @@
      end
      T(:,:,L+1) = T(:,:,L);
    end
+   phi_u_tab = NaN*ones(M+1,N+1,L+1,1);
+   T_tab     = NaN*ones(M+1,N+1,L+1,1);
  end
 
 % Update material property fields using the initial temperature field
@@ -700,4 +707,4 @@
  varout = [varout ' T'];
 
 % save file
- eval(['save ' Ofile ' ' varout]);
+ eval(['save ' Ofile ' ' varout ' -v7.3']);

@@ -54,11 +54,11 @@
 
 %  Steady-state, zero source.
 
-%    T(z,0) = Ts - z*qb/K
+%    T(z,0) = Ts + (-qb/K)*z
 %    T(0,t) = Ts
 %    S(z,t) = 0
 
-   T = Ts - Z.*qb./K;
+   T = Ts + (-qb./K).*Z;
 
  case 'Test2_'
 
@@ -87,7 +87,7 @@
 
  case 'Test3_'
 
-%  Same as Test1 but with temperature-dependent conductivity
+%  Same as Test1 but with temperature-dependent thermal conductivity
 
 %    T(0,t) = Ts
 %    S(z,t) = 0
@@ -112,34 +112,36 @@
 %  Steady-state, exponential heat production.  Flux at any depth
 %  is equal to the integral of the source S(z) below that depth.
 
-%    T(z,0) = Ts + S0/K *hs^2 *[1-exp(-z/hs)]
+%    T(z,0) = Ts + (-qb/K)*z - (S0*hs/K) * [exp(-zb/hs)*z + (exp(-z/hs)-1)*hs]
 %    T(0,t) = Ts
 %    S(z,t) = S0*exp(-z/hs)
 
    K  = K(1);
    S0 = S0(1);
    hs = hs(1);
-   T  = Ts -(S0/K)*hs*hs* expm1(-Z/hs);
+   Zb = max(Z);
+
+   T  = Ts + (-qb./K).*Z - (S0*hs/K) * (exp(-Zb/hs).*Z + (exp(-Z/hs)-1)*hs);
 
  case 'Test5_'
 
 %  Instantaneous step change on upper boundary.
 
-%    T(z,0) = Ts - z*qb/K
+%    T(z,0) = Ts + (-qb/K)*z
 %    T(0,t) = Ts + dT
 %    S(z,t) = 0
 
-   T = Ts - Z.*qb./K;
+   T = Ts + (-qb./K).*Z;
 
  case 'Test6_'
 
 %  Surface temperature increases at a linear rate.
 
-%   T(z,0) = Ts - z*qb/K
+%   T(z,0) = Ts + (-qb/K)*z
 %   T(0,t) = Ts + a*t
 %   S(z,t) = 0
 
-   T = Ts - Z.*qb./K;
+   T = Ts + (-qb./K).*Z;
 
  case 'Test7_'
 
@@ -165,10 +167,10 @@
 
 %  Triangular pulse on upper boundary.
 
-%    T(z,0) = T2 - z*qb/K
+%    T(z,0) = Ts + (-qb/K)*z
 %    S(z,t) = 0
 
-   T = Ts - Z.*qb./K;
+   T = Ts + (-qb./K).*Z;
 
  otherwise
    disp(' ')

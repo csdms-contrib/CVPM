@@ -30,4 +30,4 @@
 
 % convert to SI base units
 
- S0 = 1e-03 * S0;       % [W/m^3]
+ S0 = 1e-06 * S0;       % [W/m^3]

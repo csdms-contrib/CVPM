@@ -316,6 +316,11 @@ case 2                 % > Numerical calculation assuming steady-state condition
      phi_uz  = phiuSub(Mtyp(:,N),phi_wz,lambda(:,N),r(:,N),DeltaT);
      phi_iz  = phi_wz - phi_uz;
 
+%   initialize phi_u(T) table
+
+     [phi_u_tab(:,N,:),T_tab(:,N,:)] = phiu_table(Mtyp(:,N),phi_w(:,N),lambda(:,N), ...
+        r(:,N),solute,xs0(:,N),theta_p);
+
 %   bulk thermal conductivity at CV grid points
 
      K = Ksub(Tz,Mtyp(:,N),Km0(:,N),phi(:,N),phi_iz,phi_uz,planet);
@@ -501,6 +506,8 @@ case 2                 % > Numerical calculation assuming steady-state condition
        K       = Ksub(Tz,Mtyp(:,j),Km0(:,j),phi(:,j),phi_iz,phi_uz,planet);
        Ke      = Keff(K,varepZ);
        Tz      = initTz_numerSS(Ts(j),qb(j),Ke,dz,QS(:,j));
+       [phi_u_tab(:,j,:),T_tab(:,j,:)] = phiu_table(Mtyp(:,j),phi_w(:,j),lambda(:,j), ...
+          r(:,j),solute,xs0(:,j),theta_p);
 
 %     Phase 1 iterations
        icount = 1;
@@ -544,11 +551,9 @@ case 2                 % > Numerical calculation assuming steady-state condition
  
  case 3             % > Analytic solution ----
 
-   phi_u_tab = NaN*ones(M+1,N+1,1);
-   T_tab     = NaN*ones(M+1,N+1,1);
-   rho       = rhom;
-   cp        = cpm0;
-   C         = rho .* cp;
+   rho = rhom;
+   cp  = cpm0;
+   C   = rho .* cp;
 
    switch Pscale
    case 'local'             % use properties found at column R(N)
@@ -564,6 +569,8 @@ case 2                 % > Numerical calculation assuming steady-state condition
        T(:,j) = Tz;
      end
    end
+   phi_u_tab = NaN*ones(M+1,N+1,1);
+   T_tab     = NaN*ones(M+1,N+1,1);
  end
 
 % Update material property fields using the initial temperature field

@@ -211,6 +211,10 @@
    phi_u   = phiuSub(Mtyp,phi_w,lambda,r,DeltaT);
    phi_i   = phi_w - phi_u;
 
+% initialize phi_u(T) table
+
+   [phi_u_tab,T_tab] = phiu_table(Mtyp,phi_w,lambda,r,solute,xs0,theta_p);
+
 % bulk thermal conductivity at CV grid points
 
    K = Ksub(T,Mtyp,Km0,phi,phi_i,phi_u,planet);
@@ -347,12 +351,13 @@
 
  case 3             % > Analytic solution (available for most TEST cases) ----
 
+   rho = rhom;
+   cp  = cpm0;
+   C   = rho .* cp;
+   T   = initTz_analytic(experim,Ts,qb,Z,Dz,dz,Km0,C,S0,hs);
+
    phi_u_tab = NaN*ones(M+1,1);
    T_tab     = NaN*ones(M+1,1);
-   rho       = rhom;
-   cp        = cpm0;
-   C         = rho .* cp;
-   T         = initTz_analytic(experim,Ts,qb,Z,Dz,dz,Km0,C,S0,hs);
  end
 
 % Update material property fields using the initial temperature field
