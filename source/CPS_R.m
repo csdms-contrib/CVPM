@@ -94,8 +94,9 @@
  Sr     = init_Sr(         Mtyp,Marr, 9,CS);    % degree of pore saturation
  xs0    = init_xs0(        Mtyp,Marr,10,CS);    % mole fraction of solutes (with no ice)
  lambda = init_lambda(     Mtyp,Marr,11,CS);	% interfacial melting paramater
- Psi    = init_Psi(        Mtyp,Marr,12,CS);    % volume fraction of pores associated with particles of radius r
- r      = init_r(          Mtyp,Marr,13,CS);    % effective radius of matrix particles
+ r1     = init_r(          Mtyp,Marr,12,CS);    % radius of larger mode particles or pores
+ r2     = init_r(          Mtyp,Marr,13,CS);    % radius of smaller mode particles or pores
+ n21    = init_n21(        Mtyp,Marr,14,CS);    % ratio of number of pores with radius r2 to those with radius r1
 
 % display R-grid
 
@@ -113,10 +114,18 @@
  phi_a  = (1 - Sr) .* phi;
  phi_w  = phi - phi_a;
 
+% find the relative volume fraction for each particle or pore size
+
+ Psi2     = zeros(size(n21));
+ LL       = r2 > 0;
+ rrat3    = (r1 ./ r2).^3;
+ Psi2(LL) = n21(LL) ./ (rrat3(LL) + n21(LL));
+ Psi1     = 1 - Psi2;
+
 % set seed volume fractions of ice & unfrozen water
 
- DeltaT = ones(size(r));
- phi_u  = phiuSub(Mtyp,phi_w,lambda,r,DeltaT);
+ DeltaT = ones(size(n21));
+ phi_u  = phiuSub(Mtyp,phi_w,Psi1,Psi2,r1,r2,lambda,DeltaT);
  phi_i  = phi_w - phi_u;
 
 % get inner/outer boundary conditions at initial time
@@ -176,7 +185,7 @@
  rhol    = rho;
 
  while max(resid) > rhotol
-   [phi_u_tab,T_tab] = phiu_table(Mtyp,phi_w,lambda,r,solute,xs0,theta_p);
+   [phi_u_tab,T_tab] = phiu_table(Mtyp,phi_w,Psi1,Psi2,r1,r2,lambda,solute,xs0,theta_p);
    [phi_u,~] = phiu_tableI(T,Mtyp,Mw,phi_u_tab,T_tab);
    phi_i     = phi_w - phi_u;
    rho       = update_rho(Mtyp,rhom,phi,phi_i,phi_u);
@@ -265,7 +274,7 @@
  varout = [varout ' BCtypes BCfiles S_opt S0 hs'];
 
 % material properties
- varout = [varout ' Mtyp Km0 rhom cpm0 phi rho K C rhocp solute xs0 lambda Psi r'];
+ varout = [varout ' Mtyp Km0 rhom cpm0 phi rho K C rhocp Psi1 Psi2 r1 r2 lambda solute xs0'];
 
 % volume fractions and unfrozen water
  varout = [varout ' Mw phi_i phi_u phi_u_tab T_tab'];

@@ -1,4 +1,4 @@
- function [phi_u,T] = phiu_table(Mtyp,phi_w,lambda,r,solute,xs0,theta_p)
+ function [phi_u,T] = phiu_table(Mtyp,phi_w,Psi1,Psi2,r1,r2,lambda,solute,xs0,theta_p)
 
 % Builds a table of phi_u values corresponding to a DeltaT array (ranging 
 % from 500 C to -100 C) at each CV.  The temperatures T corresponding to 
@@ -10,15 +10,18 @@
 
 % Notation:
 
-%   Mtyp    = material type                                 (M+1)
-%   phi_w   = volume fraction of water (solid & liquid)     (M+1)
-%   lambda  = interfacial melting parameter                 (M+1)
-%   r       = effective radius of matrix particles          (M+1)
-%   solute  = chemical formula for the solute               (string)
-%   xs0     = solute mole fraction with no ice              (M+1)
-%   theta_p = pressure freezing-point depression            (M+1)
-%   phi_u   = volume fraction of unfrozen water             (M+1,nT)
-%   T       = temperatures corresponding to phi_u           (M+1,nT)
+%   Mtyp    = material type                                     (M+1)
+%   phi_w   = volume fraction of water (solid & liquid)         (M+1)
+%   Psi1    = relative volume fraction, large particles & pores (M+1)
+%   Psi2    = relative volume fraction, small particles & pores (M+1)
+%   r1      = effective radius of large particles or pores      (M+1)
+%   r2      = effective radius of small particles or pores      (M+1)
+%   lambda  = interfacial melting parameter                     (M+1)
+%   solute  = chemical formula for the solute                   (string)
+%   xs0     = solute mole fraction with no ice                  (M+1)
+%   theta_p = pressure freezing-point depression                (M+1)
+%   phi_u   = volume fraction of unfrozen water                 (M+1,nT)
+%   T       = temperatures corresponding to phi_u               (M+1,nT)
 
 % Notes:
 
@@ -55,10 +58,17 @@
  DeltaT = [x y];
  nT     = length(DeltaT);
 
+% find the volume fraction of water for each particle or pore size
+
+ phi_w1 = Psi1 .* phi_w;
+ phi_w2 = Psi2 .* phi_w;
+
 % pre-allocate arrays
 
- phi_u = zeros(Mp1,nT);
- T     = NaN*ones(size(phi_u));
+ phi_u  = zeros(Mp1,nT);
+ phi_u1 = zeros(Mp1,nT);
+ phi_u2 = zeros(Mp1,nT);
+ T      = NaN*ones(size(phi_u));
 
 % Step through layers
 
@@ -68,7 +78,9 @@
 
 %   find phi_u values corresponding to DeltaT array
 
-     phi_u(k,:) = phiu_pore(phi_w(k),lambda(k),r(k),DeltaT,PC_opt);
+     phi_u1(k,:) = phiu_pore(phi_w1(k),r1(k),lambda(k),DeltaT,PC_opt);
+     phi_u2(k,:) = phiu_pore(phi_w2(k),r2(k),lambda(k),DeltaT,PC_opt);
+     phi_u( k,:) = phi_u1(k,:) + phi_u2(k,:);
 
 %   find temperatures T corresponding to the DeltaT array
 

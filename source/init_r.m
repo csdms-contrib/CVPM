@@ -25,17 +25,19 @@
    Marr = Marr';
  end
 
-% pre-allocate the array assuming no pores are present
+% pre-allocate diameters assuming no pores are present
 
- r = zeros(size(Mtyp));
+ d = zeros(size(Mtyp));
 
 % reset the radius for rocks, soils, and organic-rich materials
 
  L = (Mtyp >= 4) & (Mtyp <= 25);
 
  if any(L)
-   r(L) = Marr(L,col);
+   d(L) = Marr(L,col);
  end
+
+ r = d/2;
 
 % convert to SI base units
 

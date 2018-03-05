@@ -35,7 +35,7 @@
 
  case 'txt'         % text file
 
-   nc     = 17;                   % number of columns in *.txt file
+   nc     = 18;                   % number of columns in *.txt file
    fmtstr = repmat('%g,',1,nc);   % format string
 
    fid = fopen(Lfile,'r');

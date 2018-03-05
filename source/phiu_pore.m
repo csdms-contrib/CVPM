@@ -1,4 +1,4 @@
- function phi_u = phiu_pore(phi_w,lambda,r,DeltaT,PC_opt)
+ function phi_u = phiu_pore(phi_w,r,lambda,DeltaT,PC_opt)
 
 % Finds the volume fraction of unfrozen water in pores for matrix 
 % particles with an effective radius r based on the Cahn et al. (1992)
@@ -7,8 +7,8 @@
 % Notation:
 
 %   phi_w  = volume fraction of water (solid & liquid)  (vector)
-%   lambda = interfacial melting parameter [K^1/3 m]    (vector)
 %   r      = effective radius of matrix particles [m]   (vector)
+%   lambda = interfacial melting parameter [K^1/3 m]    (vector)
 %   DeltaT = Tf - T                                     (vector)
 %   PC_opt = packing coefficient option                 (string)
 %   phi_u  = volume fraction of unfrozen water          (vector)
@@ -40,7 +40,7 @@
    a2 = 8.572;
  otherwise
    disp(' ')
-   disp('warning phiu_sub: unknown packing option.')
+   disp('warning phiu_pore: unknown packing option.')
    pause
  end
 
@@ -78,3 +78,8 @@
    disp('phiu_pore: warning, unknown case.')
    pause
  end
+
+% reset if r = 0
+
+% L = r == 0;
+% phi_u(L) = 0;

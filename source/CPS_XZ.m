@@ -66,11 +66,11 @@
    CS          = 'XZ';      % from now on, the code will think CS = 'XZ'
  end
 
- tmin = t_limits(1);
- Zmin = CS_limits(1);
- Zmax = CS_limits(2);
- Xmin = CS_limits(3);
- Xmax = CS_limits(4);
+ tmin =  t_limits(1);
+ Xmin = CS_limits(1);
+ Xmax = CS_limits(2);
+ Zmin = CS_limits(3);
+ Zmax = CS_limits(4);
 
  upperBC_type = BCtypes{1};
  lowerBC_type = BCtypes{2};
@@ -84,8 +84,8 @@
  xrighBC_file = ['BCs/' BCfiles{4}];
 
  disp(' ')
- disp(['Zlayer_file = ' Zlayer_file])
  disp(['Xlayer_file = ' Xlayer_file])
+ disp(['Zlayer_file = ' Zlayer_file])
  disp(' ')
  disp(['upperBC_type = ' upperBC_type])
  disp(['lowerBC_type = ' lowerBC_type])
@@ -123,8 +123,9 @@
  Sr     =     ones(M+1,N+1);
  xs0    =    zeros(M+1,N+1);
  lambda = NaN*ones(M+1,N+1);
- Psi    =     ones(M+1,N+1);
- r      = NaN*ones(M+1,N+1);
+ r1     = NaN*ones(M+1,N+1);
+ r2     = NaN*ones(M+1,N+1);
+ n21    =    zeros(M+1,N+1);
 
  for j=1:N+1
    switch MtypX(j)
@@ -137,10 +138,11 @@
      hs(    :,j) = init_hs(               MarrZ, 5,'Z');    % heat-source length scale
      phi(   :,j) = init_phi(C_opt,Z,MtypZ,MarrZ, 6,'Z');	% porosity
      Sr(    :,j) = init_Sr(         MtypZ,MarrZ, 9,'Z');	% degree of pore saturation
-     xs0(   :,j) = init_xs0(        MtypZ,MarrZ,10,'Z');	% mole fraction of solutes (with no ice)
+     xs0(   :,j) = init_xs0(        MtypZ,MarrZ,10,'Z');	% mole fraction of solutes extrapolated to zero ice (phi_i = 0)
      lambda(:,j) = init_lambda(     MtypZ,MarrZ,11,'Z');    % interfacial melting paramater
-     Psi(   :,j) = init_Psi(        MtypZ,MarrZ,12,'Z');    % volume fraction of pores associated with particles of radius r
-     r(     :,j) = init_r(          MtypZ,MarrZ,13,'Z');    % effective radius of matrix particles
+     r1(    :,j) = init_r(          MtypZ,MarrZ,12,'Z');    % radius of larger mode particles or pores
+     r2(    :,j) = init_r(          MtypZ,MarrZ,13,'Z');    % radius of smaller mode particles or pores
+     n21(   :,j) = init_n21(        MtypZ,MarrZ,14,'Z');    % ratio of number of pores with radius r2 to those with radius r1
 
    otherwise        % use what's in the *_Xlayers (or *_Ylayers) file
      Mtyp(  :,j) = MtypX(j);
@@ -153,8 +155,9 @@
      Sr(    :,j) = MarrX( 9,j);
      xs0(   :,j) = MarrX(10,j);
      lambda(:,j) = MarrX(11,j);
-     Psi(   :,j) = MarrX(12,j);
-     r(     :,j) = MarrX(13,j);
+     r1(    :,j) = MarrX(12,j);
+     r2(    :,j) = MarrX(13,j);
+     n21(   :,j) = MarrX(14,j);
    end
 % initialize source-function integrated over the CVs
    QS(:,j) = QSsub_Z(S_opt,S0(:,j),hs(:,j),zf);
@@ -176,15 +179,24 @@
  phi_a = (1 - Sr) .* phi;
  phi_w = phi - phi_a;
 
+% find the relative volume fraction for each particle or pore size
+
+ Psi2     = zeros(size(n21));
+ LL       = r2 > 0;
+ rrat3    = (r1 ./ r2).^3;
+ Psi2(LL) = n21(LL) ./ (rrat3(LL) + n21(LL));
+ Psi1     = 1 - Psi2;
+
 % set seed volume fractions of ice & unfrozen water
 
- DeltaT = ones(size(r));
- phi_u  = phiuSub(Mtyp,phi_w,lambda,r,DeltaT);
+ DeltaT = ones(size(n21));
+ phi_u  = phiuSub(Mtyp,phi_w,Psi1,Psi2,r1,r2,lambda,DeltaT);
  phi_i  = phi_w - phi_u;
 
 % pre-allocate (phi_u_tab,T_tab) arrays
 
- [XX,~]    = phiu_table(Mtyp(:,N),phi_w(:,N),lambda(:,N),r(:,N),solute,xs0(:,N),zeros(size(Z)));
+ [XX,~]    = phiu_table(Mtyp(:,N),phi_w(:,N),Psi1(:,N),Psi2(:,N),r1(:,N),r2(:,N), ...
+                lambda(:,N),solute,xs0(:,N),zeros(size(Z)));
  nT        = size(XX,2);
  phi_u_tab = NaN*ones(M+1,N+1,nT);
  T_tab     = NaN*ones(M+1,N+1,nT);
@@ -246,8 +258,8 @@
      rhol  = rho;
 
      while max(resid) > rhotol
-       [phi_u_tab(:,j,:),T_tab(:,j,:)] = phiu_table(Mtyp(:,j),phi_w(:,j),lambda(:,j), ...
-          r(:,j),solute,xs0(:,j),theta_p);
+       [phi_u_tab(:,j,:),T_tab(:,j,:)] = phiu_table(Mtyp(:,j),phi_w(:,j),Psi1(:,j),Psi2(:,j), ...
+          r1(:,j),r2(:,j),lambda(:,j),solute,xs0(:,j),theta_p);
        [phi_uz,~] = phiu_tableI(T(:,j),Mtyp(:,j),Mw(:,j),phi_u_tab(:,j,:),T_tab(:,j,:));
        phi_iz     = phi_w(:,j) - phi_uz;
        rho        = update_rho(Mtyp(:,j),rhom(:,j),phi(:,j),phi_iz,phi_uz);
@@ -293,13 +305,13 @@
      dTshift = theta_p + theta_s;
      Tf      = Tf0 - dTshift;
      DeltaT  = Tf - Tz;
-     phi_uz  = phiuSub(Mtyp(:,N),phi_wz,lambda(:,N),r(:,N),DeltaT);
+     phi_uz  = phiuSub(Mtyp(:,N),phi_wz,Psi1(:,N),Psi2(:,N),r1(:,N),r2(:,N),lambda(:,N),DeltaT);
      phi_iz  = phi_wz - phi_uz;
 
 %   initialize phi_u(T) table
 
-     [phi_u_tab(:,N,:),T_tab(:,N,:)] = phiu_table(Mtyp(:,N),phi_w(:,N),lambda(:,N), ...
-        r(:,N),solute,xs0(:,N),theta_p);
+     [phi_u_tab(:,N,:),T_tab(:,N,:)] = phiu_table(Mtyp(:,N),phi_w(:,N),Psi1(:,N),Psi2(:,N), ...
+        r1(:,N),r2(:,N),lambda(:,N),solute,xs0(:,N),theta_p);
 
 %   bulk thermal conductivity at CV grid points
 
@@ -331,7 +343,7 @@
      while icount < 10
        rho     = update_rho(Mtyp(:,N),rhom(:,N),phi(:,N),phi_iz,phi_uz);
        theta_p = dT_press(planet,P_opt,Z,dz,rho);
-       phi_uz  = phiuSub(Mtyp(:,N),phi_wz,lambda(:,N),r(:,N),DeltaT);
+       phi_uz  = phiuSub(Mtyp(:,N),phi_wz,Psi1(:,N),Psi2(:,N),r1(:,N),r2(:,N),lambda(:,N),DeltaT);
        phi_iz  = phi_wz - phi_uz;
        theta_s = dT_solute(Mtyp(:,N),solute,xs0(:,N),phi_wz,phi_uz);
        dTshift = theta_p + theta_s;
@@ -386,8 +398,8 @@
 
 %     build phi_u(T) table at X(N)
 
-       [phi_u_tab(:,N,:),T_tab(:,N,:)] = phiu_table(Mtyp(:,N),phi_w(:,N),lambda(:,N), ...
-          r(:,N),solute,xs0(:,N),theta_p);
+       [phi_u_tab(:,N,:),T_tab(:,N,:)] = phiu_table(Mtyp(:,N),phi_w(:,N),Psi1(:,N),Psi2(:,N), ...
+          r1(:,N),r2(:,N),lambda(:,N),solute,xs0(:,N),theta_p);
 
 %     find better phi_u, phi_i values at X(N)
 
@@ -446,8 +458,8 @@
        resid  = 1e23;
        rhol   = rho;
        while max(resid) > rhotol
-         [phi_u_tab(:,j,:),T_tab(:,j,:)] = phiu_table(Mtyp(:,j),phi_w(:,j),lambda(:,j), ...
-            r(:,j),solute,xs0(:,j),theta_p);
+         [phi_u_tab(:,j,:),T_tab(:,j,:)] = phiu_table(Mtyp(:,j),phi_w(:,j),Psi1(:,j),Psi2(:,j), ...
+            r1(:,j),r2(:,j),lambda(:,j),solute,xs0(:,j),theta_p);
          [phi_uz,~] = phiu_tableI(T(:,j),Mtyp(:,j),Mw(:,j),phi_u_tab(:,j,:),T_tab(:,j,:));
          phi_iz     = phi_w(:,j) - phi_uz;
          rho        = update_rho(Mtyp(:,j),rhom(:,j),phi(:,j),phi_iz,phi_uz);
@@ -482,13 +494,13 @@
        dTshift = theta_p + theta_s;
        Tf      = Tf0 - dTshift;
        DeltaT  = Tf - Tz;
-       phi_uz  = phiuSub(Mtyp(:,j),phi_wz,lambda(:,j),r(:,j),DeltaT);
+       phi_uz  = phiuSub(Mtyp(:,j),phi_wz,Psi1(:,j),Psi2(:,j),r1(:,j),r2(:,j),lambda(:,j),DeltaT);
        phi_iz  = phi_wz - phi_uz;
        K       = Ksub(Tz,Mtyp(:,j),Km0(:,j),phi(:,j),phi_iz,phi_uz,planet);
        Ke      = Keff(K,varepZ);
        Tz      = initTz_numerSS(Ts(j),qb(j),Ke,dz,QS(:,j));
-       [phi_u_tab(:,j,:),T_tab(:,j,:)] = phiu_table(Mtyp(:,j),phi_w(:,j),lambda(:,j), ...
-          r(:,j),solute,xs0(:,j),theta_p);
+       [phi_u_tab(:,j,:),T_tab(:,j,:)] = phiu_table(Mtyp(:,j),phi_w(:,j),Psi1(:,j),Psi2(:,j), ...
+          r1(:,j),r2(:,j),lambda(:,j),solute,xs0(:,j),theta_p);
 
 %     Phase 1 iterations
        icount = 1;
@@ -496,7 +508,7 @@
        while icount < 10
          rho     = update_rho(Mtyp(:,j),rhom(:,j),phi(:,j),phi_iz,phi_uz);
          theta_p = dT_press(planet,P_opt,Z,dz,rho);
-         phi_uz  = phiuSub(Mtyp(:,j),phi_wz,lambda(:,j),r(:,j),DeltaT);
+         phi_uz  = phiuSub(Mtyp(:,j),phi_wz,Psi1(:,j),Psi2(:,j),r1(:,j),r2(:,j),lambda(:,j),DeltaT);
          phi_iz  = phi_wz - phi_uz;
          theta_s = dT_solute(Mtyp(:,j),solute,xs0(:,j),phi_wz,phi_uz);
          dTshift = theta_p + theta_s;
@@ -514,8 +526,8 @@
 
 %     Phase 2 iterations
        while max(abs(resid)) > Ttol
-         [phi_u_tab(:,j,:),T_tab(:,j,:)] = phiu_table(Mtyp(:,j),phi_w(:,j),lambda(:,j), ...
-            r(:,j),solute,xs0(:,j),theta_p);
+         [phi_u_tab(:,j,:),T_tab(:,j,:)] = phiu_table(Mtyp(:,j),phi_w(:,j),Psi1(:,j),Psi2(:,j), ...
+            r1(:,j),r2(:,j),lambda(:,j),solute,xs0(:,j),theta_p);
          [phi_uz,~] = phiu_tableI(Tz,Mtyp(:,j),Mw(:,j),phi_u_tab(:,j,:),T_tab(:,j,:));
          phi_iz     = phi_wz - phi_uz;
          rho        = update_rho(Mtyp(:,j),rhom(:,j),phi(:,j),phi_iz,phi_uz);
@@ -730,7 +742,7 @@
  varout = [varout ' BCtypes BCfiles S_opt S0 hs'];
 
 % material properties
- varout = [varout ' Mtyp Km0 rhom cpm0 phi rho K C rhocp solute xs0 lambda Psi r'];
+ varout = [varout ' Mtyp Km0 rhom cpm0 phi rho K C rhocp Psi1 Psi2 r1 r2 lambda solute xs0'];
 
 % volume fractions and unfrozen water
  varout = [varout ' Mw phi_i phi_u phi_u_tab T_tab'];

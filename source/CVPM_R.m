@@ -277,7 +277,7 @@
 
  varout = [varout ' BCtypes BCfiles S_opt S0 hs'];
 
- varout = [varout ' Mtyp Km0 rhom cpm0 phi rho K C rhocp solute xs0 lambda Psi r'];
+ varout = [varout ' Mtyp Km0 rhom cpm0 phi rho K C rhocp Psi1 Psi2 r1 r2 lambda solute xs0'];
 
  varout = [varout ' Mw phi_i phi_u phi_u_tab T_tab'];
 
