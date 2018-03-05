@@ -286,7 +286,7 @@
    set(gca,'YDir','reverse')
    xlabel('$\Delta T$ (K)','interpreter','latex')
    linkaxes(ax,'y')
-   pause(0.01)
+   pause(0.5)
  end
  pause
 

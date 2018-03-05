@@ -540,7 +540,7 @@
    grid on
    set(gca,'YDir','reverse')
    xlabel('$\Delta T$ (K)','interpreter','latex')
-   pause(0.5)
+   pause(1)
    ic = ic + 1;
  end
 
