@@ -1,4 +1,4 @@
-Test1 X-layers
+Test1 Y-layers
 use properties found in Z-layers file
 
 Xmin  Xmax  dx   Mtyp unused...
