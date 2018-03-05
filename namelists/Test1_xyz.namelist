@@ -1,17 +1,17 @@
-Test4_xyz namelist
-XYZ vertical test, steady state
-simple material with fixed-properties, exponential source term
+Test1_xyz namelist
+XYZ simple vertical test, steady state
+simple material with fixed-properties, zero source
 
 planet                   = 'earth',
-site                     = 'Test4',
+site                     = 'Test1',
 coordinate_system        = 'XYZ',
 problem_scale            = 'local',
-min_X, max_X             =  0,  800,
-min_Y, max_Y             =  0,  800,
-min_Z, max_Z             =  0, 5000,
+min_X, max_X             =  0, 20,
+min_Y, max_Y             =  0, 20,
+min_Z, max_Z             =  0, 20,
 time_units               = 'years',
 start_time, end_time     =  0, 10,
-computational_time_step  =  0.25,
+computational_time_step  =  0.01,
 output_interval          =  1,
 initT_opt                =  3,    
 initial_condition_file   = 'none',
@@ -21,8 +21,8 @@ xleftBC_type, _file      = 'q', 'qa_0_xyz.mat',
 xrightBC_type, _file     = 'q', 'qo_0_xyz.mat',
 yleftBC_type, _file      = 'q', 'qc_0_xyz.mat',
 yrightBC_type, _file     = 'q', 'qd_0_xyz.mat',
-source_function_opt      = 'exponential',
+source_function_opt      = 'zero',
 compaction_function_opt  = 'off',
 pressure_opt             = 'off',
 solute                   = 'none',
-implicit_explicit_factor = 0.8,
+implicit_explicit_factor =  0.8,
