@@ -1,0 +1,21 @@
+sedseq_z namelist
+0.75 K/decade warming on the upper boundary, 1-D vertical test
+vertical sequence of sedimentary rocks
+
+planet                   = 'earth',
+site                     = 'sedSeq',
+coordinate_system        = 'Z',
+min_Z, max_Z             =  0, 1000,
+time_units               = 'years',
+start_time, end_time     =  0, 100,
+computational_time_step  =  0.25,
+output_interval          =  5,
+initT_opt                =  2,
+initial_condition_file   = 'none',
+upperBC_type, _file      = 'T', 'Ts_0p75Kdecade.txt',
+lowerBC_type, _file      = 'q', 'qb_50.txt',
+source_function_opt      = 'exponential',
+compaction_function_opt  = 'exponential',
+pressure_opt             = 'hydrostatic',
+solute			 = 'NaCl',
+implicit_explicit_factor =  0.85,
