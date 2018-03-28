@@ -1,7 +1,10 @@
  function [td,Ta] = SB_drill_model(dR,Rdo,Rh,H,rho,mf,Te,T0,gamma,K,kappa,tdays,Z)
 
 % Finds temperatures inside a drill pipe and surrounding annulus using the  
-% Szarka-Bobok (2012) model.
+% Szarka-Bobok model,
+
+% Szarka, Z., and Bobok, E. (2012): Determination of the temperature distribution
+%   in the circulating drilling fluid, Geosci. Eng., 1, 37-47.
 
 % This version is designed to simulate the advancing drill.
 
