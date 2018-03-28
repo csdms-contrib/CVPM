@@ -30,6 +30,7 @@
 
 % parameters
 
+ dz    = 2;         % resolution of vertical grid (m)
  dR    = 0.0092;    % drill pipe wall thickness
  Rdo   = 0.084;     % drill pipe outer radius
  Rh    = 0.155;     % open hole radius
@@ -51,7 +52,7 @@
  
 % define depth grid
 
- Z = (1:1:H)';
+ Z = (dz:dz:H)';
 
 % find annulus temperatures
 
@@ -70,7 +71,7 @@
  L      = isnan(dTa);
  dTa(L) = 0;            % fix dTa below the drill bit
 
-% assume dTa at 0 m in the borehole is the same as that at 1 m depth
+% assume dTa at 0 m in the borehole is the same as first depth
 
  Z   = [0; Z];
  nZ  = length(Z);
