@@ -144,7 +144,7 @@
      xs0(   :,j) = init_xs0(        MtypZ,MarrZ,10,'Z');    % mole fraction of solutes (with no ice)
      lambda(:,j) = init_lambda(     MtypZ,MarrZ,11,'Z');    % interfacial melting paramater
      r1(    :,j) = init_r(          MtypZ,MarrZ,12,'Z');    % radius of larger mode particles or pores
-     r1(    :,j) = init_r(          MtypZ,MarrZ,13,'Z');    % radius of smaller mode particles or pores
+     r2(    :,j) = init_r(          MtypZ,MarrZ,13,'Z');    % radius of smaller mode particles or pores
      n21(   :,j) = init_n21(        MtypZ,MarrZ,14,'Z');    % ratio of number of pores with radius r2 to those with radius r1
 
    otherwise        
