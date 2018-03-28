@@ -2,14 +2,7 @@
 
 % Makes a boundary-condition file for the 2-D cylindrical CVPM case.
 
-% This is typically done to simulate the drilling/conditioning phases of a
-% borehole.
-
-% Notes: 
-
-%   (1) At present, this code is only setup to create a drilling disturbance
-%       BC based on output from AK_make_varphi_p1td.
-%   (2) Times are "local" time, ie. t=0 when drill reaches this depth. 
+% This is typically done to simulate the drilling phase of a borehole.
 % ____________________________________________________________________
 
 % > Set environment
@@ -18,6 +11,7 @@
  clear all
  format shortg
  colordef white
+ pos = set_screen(3);
 
 % pickup the location of the working directory from the CVPM.config file
 
@@ -34,50 +28,77 @@
 %   Email: gary.clow@colorado.edu
 % ______________________________________________
 
+% parameters
+
+ dR    = 0.0092;    % drill pipe wall thickness
+ Rdo   = 0.084;     % drill pipe outer radius
+ Rh    = 0.155;     % open hole radius
+ rho   = 1200;      % fluid density
+ mf    = 36;        % fluid mass flux
+ Te    = 30;        % fluid inlet temperatures
+ T0    = -12;       % mean long-term surface temperature
+ gamma = 0.04;      % mean geothermal gradient
+ K     = 1.85;      % mean thermal conductivity of rocks
+ kappa = 0.8e-06;   % mean thermal diffusivity of rocks
+
+% inputs
+
  disp(' ')
- well_code = input('Type well_code: ','s');
+ H = input('Type total borehole depth (m): ');
 
-% load drilling disturbance varphi (part 1) file
+ disp(' ')
+ tdays = input('Type number of days to drill hole: ');
+ 
+% define depth grid
 
- fn = ['AK_projects/drilling_disturb/varphi_' well_code '_p1td_cell'];
- load(fn)
+ Z = (1:1:H)';
 
- nZ = size(varphiCell,1);
- td = varphiCell{1,8};      % time since well was spudded (global time) <all depths use the same time array>
- nt = length(td);
+% find annulus temperatures
 
-% preallocate arrays
+ [td,Ta] = SB_drill_model(dR,Rdo,Rh,H,rho,mf,Te,T0,gamma,K,kappa,tdays,Z);
 
- Z      = NaN*ones(nZ,1);
- DeltaT = NaN*ones(nZ,nt);
+% find the drilling disturbance
 
- for k=1:nZ               % depth loop ------------->
+ F = (T0 + gamma*Z);    % undisturbed formation profile
 
-   Z(k)      = varphiCell{k,1};
-   delTstar  = varphiCell{k,6};     % scaling temperature
-   varphi_td = varphiCell{k,9};     % varphi on global timescale
+ dTa = zeros(size(Ta));
 
-% find warming at borehole wall
-
-   DeltaT(k,:) = delTstar * varphi_td;
+ for k=1:length(Z)
+   dTa(k,:) = Ta(k,:) - F(k);
  end
 
-% assume DeltaT at 0 m in the borehole is the same as that at 1 m depth
+ L      = isnan(dTa);
+ dTa(L) = 0;            % fix dTa below the drill bit
 
- Z      = [0; Z];
- nZ     = length(Z);
- DeltaT = [DeltaT(1,:); DeltaT];
+% assume dTa at 0 m in the borehole is the same as that at 1 m depth
 
-% assume DeltaT is zero when well is spudded (t = 0)
+ Z   = [0; Z];
+ nZ  = length(Z);
+ dTa = [dTa(1,:); dTa];
 
- td     = [0 td];
- DeltaT = [zeros(nZ,1) DeltaT];
+% assume dTa is zero when well is spudded (t = 0)
+
+ td  = [0 td];
+ dTa = [zeros(nZ,1) dTa];
+
+% show drilling disturbance
+
+ figure('position',pos)
+ colormap jet
+ contourf(td,Z,dTa)
+ set(gca,'YDir','reverse')
+ grid on
+ xlabel('Time (days)')
+ ylabel('Depth (m)')
+ title('Drilling Disturbance','interpreter','latex')
+ colorbar
+ text(1.01,1.03,'$\Delta T_a$~(K)','units','normalized','interpreter','latex','fontsize',18)
 
 % setup information needed by CVPM
 
- descript = [well_code  ', drilling disturbance, part 1'];
+ descript = ['drilling disturbance for a ' num2str(H) ' m borehole drilled in ' num2str(tdays) ' days'];
  t        = td';
- BC       = DeltaT';
+ BC       = dTa';
  t_units  = 'days';
  BCtype   = 'T';
  Imethod  = 'linear';

@@ -130,6 +130,9 @@
    xlabel('$\phi_i$ and $\phi_u$','interpreter','latex')
    ylabel('Depth (m)','interpreter','latex')
    title('Water Volume Fractions','interpreter','latex')
+   v = axis;
+   v(1) = 0;
+   axis(v)
    if i == 1
      sleg = {' $\phi_i$ ',' $\phi_u$ '};
      legend(sleg,'location','southeast','interpreter','latex','fontsize',14)
