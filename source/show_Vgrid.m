@@ -2,7 +2,7 @@
 
 % Displays the vertical grid.
 
- pos  = set_screen(3);
+ pos  = set_screen2(3);
  pos1 = [pos(1)-320 pos(2)+400 0.8*pos(3:4)];
 
 % Note: This function relies on Matlab plot functions.

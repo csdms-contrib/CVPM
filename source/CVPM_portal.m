@@ -26,16 +26,17 @@
 %   Email: gary.clow@colorado.edu
 % ______________________________________________
 
+% set working directory and add paths to required subdirectories
+
  [wdir,CS,opt,experimC] = input_config;
+ addpath([wdir '/source'],'-end')
+ addpath([wdir '/utilities'],'-end')
+ cd(wdir)
 
  disp(' ')
  disp(['Working Directory: ' wdir])
  disp(' ')
  disp(['Coordinate System: ' CS])
-
-% set working directory
-
- cd(wdir)
 
 % set run options
 

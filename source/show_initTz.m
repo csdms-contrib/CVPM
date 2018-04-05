@@ -2,7 +2,7 @@
 
 % Displays the initial temperature field (vertical).
 
- pos = set_screen(0);
+ pos = set_screen2(0);
 
 % Note: This function relies on Matlab plot functions.
 % ______________________________________________

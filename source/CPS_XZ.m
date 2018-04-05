@@ -28,7 +28,7 @@
  disp(' ')
  disp('* Running CPS *')
 
- pos = set_screen(0);
+ pos = set_screen2(0);
 
 % diagnostics
 
