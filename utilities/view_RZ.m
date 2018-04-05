@@ -11,7 +11,7 @@
  clear all
  format shortg
  colordef white
- pos = set_screen(0);
+ pos = set_screen2(0);
 
 % plot mode
 
@@ -20,6 +20,8 @@
 % pickup the location of the working directory from the CVPM.config file
 
  [wdir,~,~,~] = input_config;
+ addpath([wdir '/source'],'-end')
+ addpath([wdir '/utilities'],'-end')
  cd(wdir)
 % ______________________________________________
 

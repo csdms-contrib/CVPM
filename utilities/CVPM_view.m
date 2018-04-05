@@ -15,8 +15,10 @@
 % pickup the location of the working directory from the CVPM.config file
 
  [wdir,~,~,~] = input_config;
+ addpath([wdir '/source'],'-end')
+ addpath([wdir '/utilities'],'-end')
  cd(wdir)
-% __________________________________________________________________________
+% ______________________________________________
 
 % Select coordinate system
 
