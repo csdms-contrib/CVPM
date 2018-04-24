@@ -29,8 +29,10 @@
 % set working directory and add paths to required subdirectories
 
  [wdir,CS,opt,experimC] = input_config;
+ addpath( wdir,                '-end')
  addpath([wdir '/source'],'-end')
  addpath([wdir '/utilities'],'-end')
+ savepath
  cd(wdir)
 
  disp(' ')

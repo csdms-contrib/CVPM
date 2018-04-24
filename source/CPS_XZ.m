@@ -249,19 +249,19 @@
 
 % build phi_u(T) table
 
-   rho     = init_rho(Mtyp(:,N),rhom(:,N),phi(:,N),phi_i(:,N),phi_u(:,N));    % seed values
-   theta_p = dT_press(planet,P_opt,Z,dz,rho);                                 %   "    "
-
    for j=N+1:-1:1              % sweep across X(j) values
 
-     resid = 1e23;
-     rhol  = rho;
+     phi_wz  = phi_w(:,N);
+     rho     = init_rho(Mtyp(:,N),rhom(:,N),phi(:,N),phi_i(:,N),phi_u(:,N));    % seed values
+     theta_p = dT_press(planet,P_opt,Z,dz,rho);                                 %   "    "
+     resid   = 1e23;
+     rhol    = rho;
 
      while max(resid) > rhotol
        [phi_u_tab(:,j,:),T_tab(:,j,:)] = phiu_table(Mtyp(:,j),phi_w(:,j),Psi1(:,j),Psi2(:,j), ...
           r1(:,j),r2(:,j),lambda(:,j),solute,xs0(:,j),theta_p);
        [phi_uz,~] = phiu_tableI(T(:,j),Mtyp(:,j),Mw(:,j),phi_u_tab(:,j,:),T_tab(:,j,:));
-       phi_iz     = phi_w(:,j) - phi_uz;
+       phi_iz     = phi_wz - phi_uz;
        rho        = update_rho(Mtyp(:,j),rhom(:,j),phi(:,j),phi_iz,phi_uz);
        theta_p    = dT_press(planet,P_opt,Z,dz,rho);
        resid      = abs(rho - rhol);
@@ -610,7 +610,7 @@
    disp('Z phi phi_i phi_u dphiudT')
    [Z phi(:,j) phi_i(:,j) phi_u(:,j) dphiudT]
    disp('Z T K rho C/1e06')
-   [Z Tz K(:,j) rho(:,j) C(:,j)/1e06]
+   [Z T(:,j) K(:,j) rho(:,j) C(:,j)/1e06]
  end
 
 % > Show initial fields
