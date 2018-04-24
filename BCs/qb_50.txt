@@ -3,5 +3,5 @@ qb = constant = 50 mW/m^2
 
 t_units       = 'years',
 interp_method = 'linear',
-t, qb         = -60000, 50e-03,              =      0, 50e-03,
-              =  20000, 50e-03,
+t, qb         = -300000, 50e-03,              =       0, 50e-03,
+              =   20000, 50e-03,

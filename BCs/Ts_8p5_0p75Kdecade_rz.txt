@@ -1,0 +1,8 @@
+Ts = 0.75 K/decade warming across entire surface
+2-D cylindrical experiment
+
+t_units       = 'years',
+interp_method = 'linear',
+R             =         0,    1,   75, 1000,
+t, Ts(R)      =   0, -8.5, -8.5, -8.5, -8.5,
+              = 100, -1.0, -1.0, -1.0, -1.0,

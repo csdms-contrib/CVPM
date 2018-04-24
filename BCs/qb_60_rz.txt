@@ -1,0 +1,6 @@
+qb = constant = 60 mW/m^22-D cylindrical experiment
+
+t_units       = 'years',
+interp_method = 'linear',
+R             =            0,      1,    100,   1000,
+t, qb(R)      =   0,  60e-03, 60e-03, 60e-03, 60e-03,              = 100,  60e-03, 60e-03, 60e-03, 60e-03,
