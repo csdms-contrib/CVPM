@@ -1,7 +1,0 @@
-Ts = 0.5 K/decade warming
-1-D vertical experiment
-
-t_units       = 'years',
-interp_method = 'linear',
-t, Ts         =    0, -9,
-              =  100, -4,
