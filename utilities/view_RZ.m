@@ -150,7 +150,7 @@
    set(gca,'YDir','reverse')
    axis(v)
    xlabel('Radial Distance (m)','interpreter','latex')
-   title('Conductivity, $K$~(W~m$^{-1}$~K$^{-1}$)','interpreter','latex')
+   title('Conductivity, $k$~(W~m$^{-1}$~K$^{-1}$)','interpreter','latex')
    colorbar
 
    ax(4) = subplot(2,3,4);
@@ -166,12 +166,12 @@
 
    ax(5) = subplot(2,3,5);
    colormap jet
-   contourf(RR,Z,C/1e06)
+   contourf(RR,Z,log10(C/1e06))
    grid on
    set(gca,'Ydir','reverse')
    axis(v)
    xlabel('Radial Distance (m)','interpreter','latex')
-   title('Heat Capacity, $C$ (MJ/m$^3$ K)','interpreter','latex')
+   title('Heat Capacity, log[$C$] (MJ~m$^{-3}$~K$^{-1}$)','interpreter','latex')
    colorbar
 
    ax(6) = subplot(2,3,6);
@@ -196,7 +196,7 @@
 
  if strcmp(Exper(1:5),'Test_')
 
-% find errors
+% >  Find errors if this is a Test
 
    errorArr = NaN*ones(size(Tarr));
    Ts0      = Tsarr(1);

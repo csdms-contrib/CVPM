@@ -313,46 +313,17 @@
 % > Dislay slice planes
 
 % Notes:
-%   (1) Slice requires the dimensions of the array T be permuted in such a
-%       way that it basically goes (Ty,Tx,Tz).
-%   (2) The axes displayed by the following code are essentially index 
-%       numbers, not actual values.  Thus a value of 10 on the x-axis
-%       corresponds to the 10th element of X, NOT X = 10 m.  Haven't 
-%       figured out how to fix this yet.
+%   Slice requires the dimensions of the array T be permuted in such a
+%   way that it basically goes (Ty,Tx,Tz).
 
- dx1 = abs(X -   0);
- dx2 = abs(X - 110);
- dxm = abs(X - Xmax);
- dy1 = abs(Y -   0);
- dy2 = abs(Y -  50);
- dym = abs(Y - Ymax);
- dz1 = abs(Z -   0);
- dz2 = abs(Z -  20);
- dz3 = abs(Z -  50);
- dzm = abs(Z - Zmax);
+ dx5  = round((max(X) - min(X)) / 5);
+ xvec = min(X) + (0:1:5)*dx5;
+ dy5  = round((max(Y) - min(Y)) / 5);
+ yvec = min(Y) + (0:1:5)*dy5;
+ dz5  = round((max(Z) - min(Z)) / 5);
+ zvec = min(Z) + (0:1:5)*dz5;
 
- ix1  = find(dx1 == min(dx1),1,'first');
- ix2  = find(dx2 == min(dx2),1,'first');
- ixm  = find(dxm == min(dxm),1,'first');
- iy1  = find(dy1 == min(dy1),1,'first');
- iy2  = find(dy2 == min(dy2),1,'first');
- iym  = find(dym == min(dym),1,'first');
- iz1  = find(dz1 == min(dz1),1,'first');
- iz2  = find(dz2 == min(dz2),1,'first');
- iz3  = find(dz3 == min(dz3),1,'first');
- izm  = find(dzm == min(dzm),1,'first');
-
- sx = [ixm];
- sy = [iym];
- sz = [iz1,iz2,iz3,izm];
-
- sx2 = [ixm];
- sy2 = [iy1,iym];
- sz2 = [izm];
-
- sx3 = [ix1,ixm];
- sy3 = [iym];
- sz3 = [izm];
+ [X3,Y3,Z3] = meshgrid(X,Y,ZZ);
 
  figure('position',pos2)
  colormap jet
@@ -362,11 +333,13 @@
    if zflag
      T = T(1:kp,:,:);
    end
-
    Tp = permute(T,[3 2 1]);
 
    subplot(1,3,1)
-   h1 = slice(Tp,sx,sy,sz);
+   xslice = xvec;
+   yslice = [];
+   zslice = [];
+   h1 = slice(X3,Y3,Z3,Tp,xslice,yslice,zslice);
    set(h1,'FaceColor','interp','EdgeColor','none')
    set(gca,'ZDir','reverse')
    xlabel('X ')
@@ -378,10 +351,12 @@
    view(-38.5,16)
    camzoom(1.2)
    colorbar('SouthOutside')
-%   camproj perspective
 
    subplot(1,3,2)
-   h2  = slice(Tp,sx2,sy2,sz2);
+   xslice = [];
+   yslice = yvec;
+   zslice = [];
+   h2 = slice(X3,Y3,Z3,Tp,xslice,yslice,zslice);
    set(h2,'FaceColor','interp','EdgeColor','none')
    set(gca,'ZDir','reverse')
    xlabel('X ')
@@ -391,11 +366,13 @@
    view(-38.5,16)
    camzoom(1.2)
    colorbar('SouthOutside')
-%   camproj perspective
 
    subplot(1,3,3)
-   h2  = slice(Tp,sx3,sy3,sz3);
-   set(h2,'FaceColor','interp','EdgeColor','none')
+   xslice = [];
+   yslice = [];
+   zslice = zvec;
+   h3 = slice(X3,Y3,Z3,Tp,xslice,yslice,zslice);
+   set(h3,'FaceColor','interp','EdgeColor','none')
    set(gca,'ZDir','reverse')
    xlabel('X ')
    ylabel('Y ')
@@ -404,7 +381,6 @@
    view(-38.5,16)
    camzoom(1.2)
    colorbar('SouthOutside')
-%   camproj perspective
    pause(0.2)
  end
  pause

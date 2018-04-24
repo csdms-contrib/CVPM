@@ -1,8 +1,10 @@
 % makeBC_RZ.m
 
-% Makes a boundary-condition file for the 2-D cylindrical CVPM case.
-
-% This is typically done to simulate the drilling phase of a borehole.
+% Makes an inner boundary-condition file for the 2-D cylindrical CVPM case.
+% This is currently done using the Szarka and Bobok (2012) wellbore model
+% which finds temperatures inside a drill pipe and surrounding annulus while
+% drilling a borehole. Program makeBC_RZ uses the calculated annulus 
+% temperature as the boundary condition at the borehole wall.
 % ____________________________________________________________________
 
 % > Set environment
@@ -11,7 +13,9 @@
  clear all
  format shortg
  colordef white
- pos = set_screen(3);
+ pos    = set_screen(3);
+ alsize = 19;               % axis labels
+ set(0,'DefaultAxesFontSize',alsize)
 
 % pickup the location of the working directory from the CVPM.config file
 
@@ -89,11 +93,11 @@
  contourf(td,Z,dTa)
  set(gca,'YDir','reverse')
  grid on
- xlabel('Time (days)')
- ylabel('Depth (m)')
+ xlabel('Time (days)','interpreter','latex')
+ ylabel('Depth (m)','interpreter','latex')
  title('Drilling Disturbance','interpreter','latex')
  colorbar
- text(1.01,1.03,'$\Delta T_a$~(K)','units','normalized','interpreter','latex','fontsize',18)
+ text(1.01,1.03,'K','units','normalized','interpreter','latex','fontsize',18)
 
 % setup information needed by CVPM
 

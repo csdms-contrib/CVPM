@@ -43,6 +43,7 @@
 
  M     = length(Z) - 1;
  tgrid = tarr;
+ tka   = -tgrid/1000;
  Nout  = length(tgrid);
  Zmin  = min(Z);
  Zmax  = max(Z);
@@ -63,6 +64,78 @@
  end
 
 % > Display results
+
+ T     = Tarr(    1:kp,:);
+ phi_i = phi_iarr(1:kp,:);
+ phi_u = phi_uarr(1:kp,:);
+ K     = Karr(    1:kp,:);
+ C     = Carr(    1:kp,:);
+ kappa = K ./ C;
+
+ figure('position',pos)
+ ax(1) = subplot(2,3,1);
+ colormap jet
+ contourf(tka,ZZ,T)
+ grid on
+ set(gca,'XDir','reverse')
+ set(gca,'YDir','reverse')
+ xlabel('Years Before Present (ka)','interpreter','latex')
+ ylabel('Depth (m)','interpreter','latex')
+ title('Temperature ($^\circ$C)','interpreter','latex')
+ colorbar
+
+ ax(2) = subplot(2,3,2);
+ contourf(tka,ZZ,log10(C/1e06))
+ grid on
+ set(gca,'XDir','reverse')
+ set(gca,'YDir','reverse')
+ xlabel('Years Before Present (ka)','interpreter','latex')
+ title('Heat Capacity, log[$C$] (MJ~m$^{-3}$~K$^{-1}$)','interpreter','latex')
+ colorbar
+
+ ax(3) = subplot(2,3,3);
+ colormap jet
+ contourf(tka,ZZ,K)
+ grid on
+ set(gca,'XDir','reverse')
+ set(gca,'YDir','reverse')
+ xlabel('Years Before Present (ka)','interpreter','latex')
+ title('Conductivity, $k$~(W~m$^{-1}$~K$^{-1}$)','interpreter','latex')
+ colorbar
+
+ ax(4) = subplot(2,3,4);
+ colormap jet
+ contourf(tka,ZZ,phi_i)
+ grid on
+ set(gca,'XDir','reverse')
+ set(gca,'YDir','reverse')
+ xlabel('Years Before Present (ka)','interpreter','latex')
+ ylabel('Depth (m)','interpreter','latex')
+ title('Volume Fraction of Ice, $\phi_i$','interpreter','latex')
+ colorbar
+
+ ax(5) = subplot(2,3,5);
+ colormap jet
+ contourf(tka,ZZ,phi_u)
+ grid on
+ set(gca,'XDir','reverse')
+ set(gca,'YDir','reverse')
+ xlabel('Years Before Present (ka)','interpreter','latex')
+ title('Liquid Water Content, $\phi_\ell$','interpreter','latex')
+ colorbar
+
+ ax(6) = subplot(2,3,6);
+ contourf(tka,ZZ,1e06*kappa)
+ grid on
+ set(gca,'XDir','reverse')
+ set(gca,'YDir','reverse')
+ xlabel('Years Before Present (ka)','interpreter','latex')
+ title('Diffusivity, $10^6 \kappa$ (m$^2$ s$^{-1}$) ','interpreter','latex')
+ colorbar
+ linkaxes(ax,'y')
+ pause
+
+% > profile form
 
  figure('position',pos)
  for i=1:Nout

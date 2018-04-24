@@ -154,12 +154,12 @@
 
    subplot(2,3,5)
    colormap jet
-   contourf(X,ZZ,C/1e06)
+   contourf(X,ZZ,log10(C/1e06))
    grid on
    set(gca,'Ydir','reverse')
    axis(v)
    xlabel('Horizontal Distance (m)','interpreter','latex')
-   title('Heat Capacity, $C$ (MJ/m$^3$ K)','interpreter','latex')
+   title('Heat Capacity, log[$C$] (MJ~m$^{-3}$~K$^{-1}$)','interpreter','latex')
    colorbar
 
    subplot(2,3,6)
@@ -174,6 +174,156 @@
    pause(0.01)
  end
  pause
+
+% > 3-D plots
+
+ dt5  = round((max(tgrid) - min(tgrid)) / 5);
+ tvec = min(tgrid) + (0:1:5)*dt5;
+
+ figure('position',pos)
+ colormap jet
+ T = Tarr;
+ if zflag
+   T = T(1:kp,:,:);
+ end
+ Tp = permute(T,[3 2 1]);
+ [X3,t3,Z3] = meshgrid(X,tgrid,ZZ);
+ xslice = [];
+ tslice = tvec;
+ zslice = [];
+ h = slice(X3,t3,Z3,Tp,xslice,tslice,zslice,'spline');
+ set(h,'edgecolor','none')
+ set(gca,'Zdir','reverse')
+ xlabel('Horizontal Distance (m)','interpreter','latex')
+ ylabel(t_units,'interpreter','latex')
+ zlabel('Depth (m)','interpreter','latex')
+ title('Temperature ($^\circ$C)','interpreter','latex')
+ colorbar
+ view(165,50)
+ rotate3d on
+ pause
+
+ figure('position',pos)
+ cmap = colormap(flipud(jet));
+ nc   = size(cmap,1);
+ cmap(1,:) = [1 50/256 1];
+ colormap(cmap)
+ phi_i = phi_iarr;
+ if zflag
+   phi_i = phi_i(1:kp,:,:);
+ end
+ phi_ip = permute(phi_i,[3 2 1]);
+ [X3,t3,Z3] = meshgrid(X,tgrid,ZZ);
+ xslice = [];
+ tslice = tvec;
+ zslice = [];
+ h = slice(X3,t3,Z3,phi_ip,xslice,tslice,zslice);
+ set(h,'edgecolor','none')
+ set(gca,'Zdir','reverse')
+ xlabel('Horizontal Distance (m)','interpreter','latex')
+ ylabel(t_units,'interpreter','latex')
+ zlabel('Depth (m)','interpreter','latex')
+ title('Volume Fraction of Ice, $\phi_i$','interpreter','latex')
+ colorbar
+ view(165,50)
+ rotate3d on
+ pause
+
+ figure('position',pos)
+ colormap jet
+ phi_u = phi_uarr;
+ if zflag
+   phi_u = phi_u(1:kp,:,:);
+ end
+ phi_up = permute(phi_u,[3 2 1]);
+ [X3,t3,Z3] = meshgrid(X,tgrid,ZZ);
+ xslice = [];
+ tslice = tvec;
+ zslice = [];
+ h = slice(X3,t3,Z3,phi_up,xslice,tslice,zslice);
+ set(h,'edgecolor','none')
+ set(gca,'Zdir','reverse')
+ xlabel('Horizontal Distance (m)','interpreter','latex')
+ ylabel(t_units,'interpreter','latex')
+ zlabel('Depth (m)','interpreter','latex')
+ title('Volume Fraction of Unfrozen Water, $\phi_\ell$','interpreter','latex')
+ colorbar
+ view(165,50)
+ rotate3d on
+ pause
+
+ figure('position',pos)
+ colormap jet
+ K = Karr;
+ if zflag
+   K = K(1:kp,:,:);
+ end
+ Kp = permute(K,[3 2 1]);
+ [X3,t3,Z3] = meshgrid(X,tgrid,ZZ);
+ xslice = [];
+ tslice = tvec;
+ zslice = [];
+ h = slice(X3,t3,Z3,Kp,xslice,tslice,zslice);
+ set(h,'edgecolor','none')
+ set(gca,'Zdir','reverse')
+ xlabel('Horizontal Distance (m)','interpreter','latex')
+ ylabel(t_units,'interpreter','latex')
+ zlabel('Depth (m)','interpreter','latex')
+ title('Conductivity, $k$~(W~m$^{-1}$~K$^{-1}$)','interpreter','latex')
+ colorbar
+ view(165,50)
+ rotate3d on
+ pause
+
+ figure('position',pos)
+ colormap jet
+ C = Carr;
+ if zflag
+   C = C(1:kp,:,:);
+ end
+ Cp = permute(C,[3 2 1]);
+ [X3,t3,Z3] = meshgrid(X,tgrid,ZZ);
+ xslice = [];
+ tslice = tvec;
+ zslice = [];
+ h = slice(X3,t3,Z3,log10(Cp/1e06),xslice,tslice,zslice);
+ set(h,'edgecolor','none')
+ set(gca,'Zdir','reverse')
+ xlabel('Horizontal Distance (m)','interpreter','latex')
+ ylabel(t_units,'interpreter','latex')
+ zlabel('Depth (m)','interpreter','latex')
+ title('Diffusivity, $10^6 \kappa$ (m$^2$ s$^{-1}$) ','interpreter','latex')
+ colorbar
+ view(165,50)
+ rotate3d on
+ pause
+
+ figure('position',pos)
+ colormap jet
+ K = Karr;
+ C = Carr;
+ if zflag
+   K = K(1:kp,:,:);
+   C = C(1:kp,:,:);
+ end
+ kappa  = K ./ C;
+ kappap = permute(kappa,[3 2 1]);
+ [X3,t3,Z3] = meshgrid(X,tgrid,ZZ);
+ xslice = [];
+ tslice = tvec;
+ zslice = [];
+ h = slice(X3,t3,Z3,kappap*1e06,xslice,tslice,zslice);
+ set(h,'edgecolor','none')
+ set(gca,'Zdir','reverse')
+ xlabel('Horizontal Distance (m)','interpreter','latex')
+ ylabel(t_units,'interpreter','latex')
+ zlabel('Depth (m)','interpreter','latex')
+ title('Diffusivity, $10^6 \kappa$ (m$^2$ s$^{-1}$) ','interpreter','latex')
+ colorbar
+ view(165,50)
+ rotate3d on
+ pause
+
 
 % > Find errors for test cases
 

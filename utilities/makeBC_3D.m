@@ -1,6 +1,6 @@
 % makeBC_3D.m
 
-% Makes a boundary condition file for the 3-D cartesian CVPM case.
+% Makes a boundary-condition file for the 3-D cartesian CVPM case.
 % ________________________________________________________________
 
 % > Set environment
