@@ -3,6 +3,31 @@
 % Finds the bulk thermal conductivity of a 3-component system using the 
 % Brailsford and Major model that assumes phases 2 and 3 are randomly
 % distributed within a continuous phase 1 medium.
+% ______________________________________________
+
+%	Copyright (C) 2018, Gary Clow
+
+%   This program is free software: you can redistribute it and/or modify
+%   it under the terms of the GNU General Public License as published by
+%   the Free Software Foundation, version 3 of the License.
+
+%   This program is distributed in the hope that it will be useful,
+%   but WITHOUT ANY WARRANTY; without even the implied warranty of
+%   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%   GNU General Public License v3.0 for more details.
+
+%   You should have received a copy of the GNU General Public License
+%   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+%	Developer can be contacted by,
+%	email at:
+%		gary.clow@colorado.edu
+%	paper mail at:
+%		Institute of Arctic and Alpine Research
+%		University of Colorado
+%		Campus Box 450
+%		Boulder, CO 80309-0450 USA
+% ______________________________________________
 
 % Notation:
 
@@ -16,15 +41,6 @@
 
 % Notes:
 %   (1)   1 = psi1 + psi2 + psi3      (this should be true)
-% ______________________________________________
-
-% Written by:
-
-%   Gary Clow
-%   Institute of Arctic and Alpine Research
-%   University of Colorado
-%   Boulder, Colorado USA
-%   Email: gary.clow@colorado.edu
 % ______________________________________________
 
  chi2 = (K1 ./ K2);

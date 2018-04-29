@@ -1,9 +1,36 @@
  function [phi_u,T] = phiu_table(Mtyp,phi_w,Psi1,Psi2,r1,r2,lambda,solute,xs0,theta_p)
 
 % Builds a table of phi_u values corresponding to a DeltaT array (ranging 
-% from 500 C to -100 C) at each CV.  The temperatures T corresponding to 
-% the DeltaT array are then determined (this will be different for each
-% layer due to the pressure and solute effects).
+% from 500 C to -100 C) at each CV.  
+% ______________________________________________
+
+%	Copyright (C) 2018, Gary Clow
+
+%   This program is free software: you can redistribute it and/or modify
+%   it under the terms of the GNU General Public License as published by
+%   the Free Software Foundation, version 3 of the License.
+
+%   This program is distributed in the hope that it will be useful,
+%   but WITHOUT ANY WARRANTY; without even the implied warranty of
+%   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%   GNU General Public License v3.0 for more details.
+
+%   You should have received a copy of the GNU General Public License
+%   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+%	Developer can be contacted by,
+%	email at:
+%		gary.clow@colorado.edu
+%	paper mail at:
+%		Institute of Arctic and Alpine Research
+%		University of Colorado
+%		Campus Box 450
+%		Boulder, CO 80309-0450 USA
+% ______________________________________________
+
+% The temperatures T corresponding to the DeltaT array are then determined 
+% (this will be different for each layer due to the pressure and solute 
+% effects).
 
 % CPS subsequently interpolates the values in this table to find
 % the unfrozen water content (phi_u) at temperature T.
@@ -32,15 +59,6 @@
 %       versa.  As phi_w decreases upon warming and increases upon cooling,
 %       phi_u can never exceed the initial phi_w value.  Thus, this table is
 %       constructed within CPS using the constraint phi_u <= initial(phi_w).
-% ______________________________________________
-
-% Written by:
-
-%   Gary Clow
-%   Institute of Arctic and Alpine Research
-%   University of Colorado
-%   Boulder, Colorado USA
-%   Email: gary.clow@colorado.edu
 % ______________________________________________
 
  Mp1 = length(Mtyp);    % M+1

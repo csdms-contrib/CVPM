@@ -2,6 +2,31 @@
       = Zgrid(zfuL,zfdL,dzL,MtypL,MarrL,Zmin,Zmax)
 
 % Sets up the CV grid in the vertical dimension.
+% ______________________________________________
+
+%	Copyright (C) 2018, Gary Clow
+
+%   This program is free software: you can redistribute it and/or modify
+%   it under the terms of the GNU General Public License as published by
+%   the Free Software Foundation, version 3 of the License.
+
+%   This program is distributed in the hope that it will be useful,
+%   but WITHOUT ANY WARRANTY; without even the implied warranty of
+%   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%   GNU General Public License v3.0 for more details.
+
+%   You should have received a copy of the GNU General Public License
+%   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+%	Developer can be contacted by,
+%	email at:
+%		gary.clow@colorado.edu
+%	paper mail at:
+%		Institute of Arctic and Alpine Research
+%		University of Colorado
+%		Campus Box 450
+%		Boulder, CO 80309-0450 USA
+% ______________________________________________
 
 % The layers defined by (zfuL, zfdL) provide boundaries for the control
 % volumes.  Each layer can be further subdivided to have a resolution of
@@ -34,15 +59,6 @@
 %   (4) Arrays keyed to the control volumes (Mtyp,Marr) have values from
 %       the adjacent CVs stored in their first and last elements, eg.
 %       Mtyp(1) = Mtyp(2) and Mtyp(M+1) = Mtyp(M).
-% ______________________________________________
-
-% Written by:
-
-%   Gary Clow
-%   Institute of Arctic and Alpine Research
-%   University of Colorado
-%   Boulder, Colorado USA
-%   Email: gary.clow@colorado.edu
 % ______________________________________________
 
 % pre-allocate arrays

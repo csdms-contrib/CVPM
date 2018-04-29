@@ -1,6 +1,7 @@
  function [] = show_HVgrid(xfwL,xfeL,xf,X,zfuL,zfdL,zf,Z,Mtyp,CS,C)
 
 % Displays 2-D horizontal/vertical grid.
+% ______________________________________________
 
 % Notation:
 
@@ -10,15 +11,6 @@
  pos = set_screen2(0);
 
 % Note: This function relies on Matlab plot functions.
-% ______________________________________________
-
-% Written by:
-
-%   Gary Clow
-%   Institute of Arctic and Alpine Research
-%   University of Colorado
-%   Boulder, Colorado USA
-%   Email: gary.clow@colorado.edu
 % ______________________________________________
 
  N = length(X) - 1;
