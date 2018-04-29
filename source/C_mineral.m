@@ -2,6 +2,31 @@
 
 % Finds the volumetric heat capacity of mineral grains at temperature
 % T, where cpm0 is the value at the reference temperature (20 C).
+% ______________________________________________
+
+%	Copyright (C) 2018, Gary Clow
+
+%   This program is free software: you can redistribute it and/or modify
+%   it under the terms of the GNU General Public License as published by
+%   the Free Software Foundation, version 3 of the License.
+
+%   This program is distributed in the hope that it will be useful,
+%   but WITHOUT ANY WARRANTY; without even the implied warranty of
+%   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%   GNU General Public License v3.0 for more details.
+
+%   You should have received a copy of the GNU General Public License
+%   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+%	Developer can be contacted by,
+%	email at:
+%		gary.clow@colorado.edu
+%	paper mail at:
+%		Institute of Arctic and Alpine Research
+%		University of Colorado
+%		Campus Box 450
+%		Boulder, CO 80309-0450 USA
+% ______________________________________________
 
 % Notation:
 
@@ -24,15 +49,6 @@
 %       11  mudrocks
 %       12  carbonates
 %       13  cherts
-% ______________________________________________
-
-% Written by:
-
-%   Gary Clow
-%   Institute of Arctic and Alpine Research
-%   University of Colorado
-%   Boulder, Colorado USA
-%   Email: gary.clow@colorado.edu
 % ______________________________________________
 
  Tk = T + 273.15;       % kelvin temperature
